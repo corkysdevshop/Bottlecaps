@@ -1,0 +1,31 @@
+<app-my-bottlecaps-nav></app-my-bottlecaps-nav>
+<h5>Bottlecap Collection</h5><!--TODO: ORDER BY DATE, ALPHA, ETC.-->
+<button (click)="checkCollection()">Check Collection</button>
+<div class="card-columns">
+  <div class="card border-dark mb-3 m-1" style="max-width: 18rem;" *ngFor="let bottlecap of this.bottlecapService.bottleCapCollection">
+    <!--TODO: FIX WIDTH-->
+    <h5 class="text-center">
+      <div class="p-3 bg-danger rounded-circle text-light m-1 shadow-lg">
+        {{bottlecap.title}}{{bottlecap.bottlecapId}}
+      </div>
+    </h5> <!--TODO: ABILITY TO REORDER TAGS AND BOTTLECAPS-->
+    <div class="m-2 text-dark">
+
+      <h5 class="card-title font-weight-light text-danger">Tags</h5>
+      <div class="shadow rounded mb-3">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item p-1" *ngFor="let tag of bottlecap.tag">{{tag.tagText}}</li>
+        </ul>
+      </div>
+      <h5 class="card-title font-weight-light text-danger">Links</h5>
+      <div class="shadow rounded">
+        <ul class="list-group list-group-flush">
+          <!--TODO: MAKE THIS A DROPDOWN-->
+          <li class="list-group-item p-1" *ngFor="let link of bottlecap.link"><a href="{{link.linkText}}" target="_blank">{{link.linkText}}</a></li><!--TODO: MAKE THIS AN HREF-->
+        </ul>
+      </div>
+    </div>
+    <a (click)="deleteBottlecap(bottlecap)" class="card-link float-right mr-3 mb-3" style="cursor: pointer;"><u class="text-primary">Delete</u></a>
+    <a (click)="editBottlecap(bottlecap)" class="card-link float-right mr-3 mb-3" style="cursor: pointer;"><u class="text-primary">Edit</u></a>
+  </div>
+</div>

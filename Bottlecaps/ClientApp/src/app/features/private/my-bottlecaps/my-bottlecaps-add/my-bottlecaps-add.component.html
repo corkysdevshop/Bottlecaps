@@ -1,0 +1,13 @@
+<app-my-bottlecaps-nav></app-my-bottlecaps-nav>
+
+<h5>Add new bottlecaps to your collection</h5><app-snack></app-snack>
+<form #addBottlecapForm (ngSubmit)="addBottlecap(addBottlecapForm)">
+  <div class="container border border-danger rounded p-3">
+    <app-bottlecaps></app-bottlecaps>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-success float-right m-2">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

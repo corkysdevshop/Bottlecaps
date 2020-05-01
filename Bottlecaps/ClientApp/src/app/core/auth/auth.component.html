@@ -1,0 +1,52 @@
+<h4>Log in</h4>
+<br />
+
+<form #logInForm="ngForm" (ngSubmit)="logIn(logInForm.value)">
+  <label for="email" class="col-md-3 control-label">Email</label>
+  <input type="text"
+         id="email"
+         class="form-control"
+         ngModel
+         name="email" />
+
+  <label for="password" class="col-md-3 control-label">Password</label>
+  <input type="password"
+         id="password"
+         class="form-control"
+         ngModel
+         name="email" />
+
+  <br />
+  <button type="submit"
+          class="">
+    Login
+  </button>
+
+</form>
+
+<!--<hr />
+<h4>Register a new account</h4>
+<br />
+
+<form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)">
+  <label for="email" class="col-md-3 control-label">Email</label>
+  <input type="text"
+         id="email"
+         class="form-control"
+         ngModel
+         name="email" />
+
+  <label for="password" class="col-md-3 control-label">Password</label>
+  <input type="password"
+         id="password"
+         class="form-control"
+         ngModel
+         name="email" />
+
+  <br />
+  <button type="submit"
+          class="">
+    Register
+  </button>
+
+</form>-->

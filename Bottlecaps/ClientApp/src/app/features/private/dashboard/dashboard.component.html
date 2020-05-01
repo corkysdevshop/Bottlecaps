@@ -1,0 +1,96 @@
+
+<h2>Dashboard</h2>
+<p class="font-weight-light">
+  Welcome to your dashboard, where you can add bottlecaps to your profile based on your interests, explore new and different spaces and place your bottlecaps in those spaces to make new connections. Have fun innovating and exploring the cognitive diversity of the village! 
+</p>
+<hr />
+
+<div class="container innovate">
+  <div class="row">
+    <div class="offset-md-1 col-md-5 shadow p-3 mb-5 bg-white rounded" [routerLink]="['/view-collection']">
+        <button class="btn btn-danger rounded-circle" >My Bottlecaps</button>
+        <br />
+        <p>Manage your bottlecaps here. Add tags that embody your interests, as well as the links associated with those interests. You can then put the bottlecaps in other people's spaces below.</p>
+    </div>
+    <div class="col-md-5 shadow p-3 mb-5 bg-white rounded ml-2" [routerLink]="['/view-space']">
+      <button class="btn btn-primary" >My Spaces</button>
+      <p>Manage your own spaces here. You can also prune the bottlecaps placed in your space by others to make it your own and learn new things!</p>
+    </div>
+  </div>
+</div>
+
+<hr />
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+
+      <h5>Global Tag List </h5>
+      <p class="text-secondary">Select to filter</p>
+
+      <div class="input-group flex-nowrap">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="addon-wrapping">@</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="addon-wrapping">
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Cras justo odio
+          <input type="checkbox" aria-label="Checkbox for following text input">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Dapibus ac facilisis in
+          <input type="checkbox" aria-label="Checkbox for following text input">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Morbi leo risus
+          <input type="checkbox" aria-label="Checkbox for following text input">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Cras justo odio
+          <input type="checkbox" aria-label="Checkbox for following text input">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Dapibus ac facilisis in
+          <input type="checkbox" aria-label="Checkbox for following text input">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Morbi leo risus
+          <input type="checkbox" aria-label="Checkbox for following text input">
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm">
+      <h5>Filtered Spaces</h5>
+      <p class="text-secondary">Click name to enter</p>
+
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1"><a [routerLink]="['/space']">Coffeehouse Primo</a></h5>
+            <small>5 users in this space</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small>Donec id elit non mi porta.</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Conference Room A</h5>
+            <small class="text-muted">2 users in this space</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Lobby</h5>
+            <small class="text-muted">6 users in this space</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+

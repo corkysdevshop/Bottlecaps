@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bottlecaps", "Bottlecaps\Bottlecaps.csproj", "{E07EB237-4D02-44B1-965F-F8023A544C11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BC_UnitTests", "BC_UnitTests\BC_UnitTests.csproj", "{3520B71A-7E04-4C0E-AC73-A990E6D8CBFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E07EB237-4D02-44B1-965F-F8023A544C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E07EB237-4D02-44B1-965F-F8023A544C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E07EB237-4D02-44B1-965F-F8023A544C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E07EB237-4D02-44B1-965F-F8023A544C11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3520B71A-7E04-4C0E-AC73-A990E6D8CBFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3520B71A-7E04-4C0E-AC73-A990E6D8CBFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3520B71A-7E04-4C0E-AC73-A990E6D8CBFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3520B71A-7E04-4C0E-AC73-A990E6D8CBFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC1F41F6-B96D-45CE-AA4F-ED4CBA9BAA87}
+	EndGlobalSection
+EndGlobal

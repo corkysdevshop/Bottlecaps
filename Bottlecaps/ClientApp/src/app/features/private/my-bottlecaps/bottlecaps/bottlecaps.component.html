@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-sm">
+    <div class="form-group">
+      <label for="exampleFormControlInput1">Give your new bottlecap a title:</label>
+      <input type="text" class="form-control" id="" placeholder="ex. nephrology or epidemiology" name="bottlecapTitle" (input)="this.title = inputTitle.value" #inputTitle>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <!--TAGS-->
+  <div class="container">
+    <p class="font-weight-light">
+      A bottlecap is like a neuron of knowledge (tag), which is associated with lots of information that can be helpful or just fun (links). Add as many tags and links as you want.
+    </p>
+  </div>
+  <div class="col-sm border border-info m-1 p-1">
+    <div class="form-group">
+      <label for="addTagInput" class="m-1">Add tags to your new bottlecap:</label>
+      <input type="text" class="form-control" id="addTagInput" placeholder="ex. covid-19 or 'what next?'" #addTag>
+      <button type="button" class="btn btn-outline-success float-left m-1" (click)="addTagtoBottlecap(addTag)">Add Tag</button>
+      <select multiple class="form-control" id="" #deleteTag>
+        <option *ngFor="let tag of tags">{{tag.TagText}}</option>
+      </select>
+      <button type="button" class="offset-md-1 btn btn-outline-danger float-right m-1" (click)="deleteTagtoBottlecap(deleteTag)">Delete Tag</button>
+      </div>
+  </div>
+  <!--LINKS-->
+  <div class="col-sm border border-info m-1 p-1">
+    <div class="form-group">
+      <label for="deleteLinkInput" class="m-1">Add links too!</label>
+      <input type="text" class="form-control" id="deleteLinkInput" placeholder="ex. www.cdc.gov" #addLink>
+      <button type="button" class="btn btn-outline-success float-left m-1" (click)="addLinktoBottlecap(addLink)">Add Link</button>
+      <select multiple class="form-control" id="exampleFormControlSelect2" #deleteLink>
+        <option *ngFor="let link of links">{{link.LinkText}}</option>
+      </select>
+      <button type="button" class="offset-md-1 btn btn-outline-danger float-right m-1" (click)="deleteLinktoBottlecap(deleteLink)">Delete Link</button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+</div>
