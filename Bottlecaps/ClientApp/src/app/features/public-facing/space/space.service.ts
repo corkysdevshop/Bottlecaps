@@ -7,4 +7,6 @@ import { DataService } from '../../../shared/data.service';
 export class SpaceService {
 
 	constructor(private dataService: DataService) { }
+
+
 }
