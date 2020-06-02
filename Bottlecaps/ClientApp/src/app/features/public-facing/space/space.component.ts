@@ -13,5 +13,7 @@ export class SpaceComponent implements OnInit{
 	ngOnInit() {
 		this.bottlecapService.getBottlecaps(1); //TODO: THIS SHOULD PASS AN ARRAY OF BOTTLCAP IDS AND RETURN AN ARRAY SLICE TO HOLD IN THIS COMPONENT, HOWEVER FOR NOW I'LL JUST REFERENCE THE BOTTLECAP SERVICE TO GET THE IDS TO PLACE IN THE SPACE
 	}
-
+	placeBottlecap(bottlecap) {
+		console.log("place: ", bottlecap.selectedIndex);
+	}
 }

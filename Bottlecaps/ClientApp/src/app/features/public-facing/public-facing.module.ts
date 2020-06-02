@@ -4,11 +4,12 @@ import { SpaceComponent } from './space/space.component';
 import { RouterModule } from '@angular/router';
 import { TagsComponent } from './space/tags/tags.component';
 import { LinksComponent } from './space/links/links.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [SpaceComponent, TagsComponent, LinksComponent],
   imports: [
-    CommonModule, RouterModule
+    CommonModule, RouterModule, FormsModule
 	],
 	exports: [
 		SpaceComponent
