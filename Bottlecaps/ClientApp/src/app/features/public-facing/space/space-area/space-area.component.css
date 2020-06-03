@@ -1,0 +1,16 @@
+#space-image {
+  max-height: 300px;
+  position: absolute;
+  z-index: 1;
+}
+
+#space {
+  display: inline-block;
+  position: relative;
+  height: 300px;
+}
+
+#bottlecap {
+  position: relative;
+  z-index: 20;
+}
