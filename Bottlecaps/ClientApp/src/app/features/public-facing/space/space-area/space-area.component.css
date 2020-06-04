@@ -7,7 +7,7 @@
 #space {
   display: inline-block;
   position: relative;
-  height: 300px;
+  height: 300px; /* TODO: DEFINE AN APPROPRIATE SIZE FOR THE AREA */
 }
 
 #bottlecap {
