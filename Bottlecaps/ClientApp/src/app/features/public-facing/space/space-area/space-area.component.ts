@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-space-area',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./space-area.component.css']
 })
 export class SpaceAreaComponent implements OnInit {
-
+	@ViewChild('bottlecap', { static: true })
+	canvas: ElementRef<HTMLCanvasElement>;
   constructor() { }
 
-  ngOnInit() {
+	private ctx: CanvasRenderingContext2D;
+
+	ngOnInit(): void {
+		this.ctx = this.canvas.nativeElement.getContext('2d');
+		this.ctx.arc(50, 50, 40, 0, 2 * Math.PI);
+		this.ctx.stroke();
   }
 
 }
