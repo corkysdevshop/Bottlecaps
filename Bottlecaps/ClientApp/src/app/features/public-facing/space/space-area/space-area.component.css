@@ -1,13 +1,13 @@
-#space-image {
-  max-height: 300px;
-  position: absolute;
-  z-index: 0;
-}
-
 #space {
   display: inline-block;
   position: relative;
   height: 300px; /* TODO: DEFINE AN APPROPRIATE SIZE FOR THE AREA */
+}
+
+#space-image {
+  max-height: 300px;
+  position: absolute;
+  z-index: 0;
 }
 
 #bottlecap {

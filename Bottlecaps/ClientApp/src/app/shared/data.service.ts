@@ -47,6 +47,10 @@ export class DataService {
 	getBottlecapLinks(BottlecapId: number) {
 		return this.http.get<Link[]>(this.baseUrl + 'api/Links/' + BottlecapId);
 	}
+
+	getSpaceBottlecaps() {
+		return this.http.get<Space[]>(this.baseUrl + 'api/Spaces');
+	}
   /**
     * UPDATE (PUT)
     */

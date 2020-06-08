@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Bottlecap } from '../../../../shared/models';
+import { SpaceService } from '../space.service';
 
 @Component({
   selector: 'app-space-area',
@@ -9,12 +10,12 @@ import { Bottlecap } from '../../../../shared/models';
 export class SpaceAreaComponent implements OnInit {
 	@ViewChild('bottlecap', { static: true })
 	canvas: ElementRef<HTMLCanvasElement>;
-  constructor() { }
+  constructor(private spaceService: SpaceService) { }
 
 	private ctx: CanvasRenderingContext2D;
 
 	ngOnInit(): void {
-
+		this.spaceService.getSpaceBottlecaps();
   }
 
 	placeBottlecap(title) {
@@ -23,5 +24,9 @@ export class SpaceAreaComponent implements OnInit {
 		this.ctx.stroke();
 		//this.ctx.font = "30px Arial";
 		this.ctx.fillText(title, 10, 50);
+	}
+
+	checkSpaces() {
+		console.log("spaces: ", this.spaceService.spaceBottleCapCollection);
 	}
 }

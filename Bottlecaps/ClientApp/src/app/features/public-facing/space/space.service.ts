@@ -7,9 +7,14 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SpaceService {
-	bottlecapsChanged = new Subject<Bottlecap[]>();
-	bottleCapCollection: Bottlecap[] = [];
-	constructor(private dataService: DataService) { }
+	spacesChanged = new Subject<Space[]>();
+	spaceBottleCapCollection: Space[] = [];
+	constructor(private dataService: DataService) {
+		this.spacesChanged.subscribe(spaceCaps => {
+			this.spaceBottleCapCollection = [];
+			this.spaceBottleCapCollection = spaceCaps;
+		})
+	}
 
   //TODO: WHEN A BOTTLECAP IS 'PLACED' ADD IT TO THE SPACE TABLE AND RETRIEVE ALL THE BOTTLECAPS FOR THIS SPACE FROM THAT TABLE
   //TODO: ALSO, FIGURE OUT WHICH PROPERTY IN TABLE CAN BE USED TO ENSURE THE OWNER OF THE BOTTLECAP IS THE ONLY ONE THAT CAN EDIT IT
@@ -32,5 +37,17 @@ export class SpaceService {
 		newSpaceInstance.ProfileId = "";
 
 		return newSpaceInstance;
+	}
+  /**
+    * READ
+    * */
+	getSpaceBottlecaps() {
+		this.dataService.getSpaceBottlecaps().subscribe(spaceCaps => {
+			console.log("response: ", spaceCaps);
+			this.spaceBottleCapCollection = spaceCaps.slice();
+      this.spacesChanged.next(this.spaceBottleCapCollection.slice())
+		}, err => {
+			console.error(err)
+		});
 	}
 }

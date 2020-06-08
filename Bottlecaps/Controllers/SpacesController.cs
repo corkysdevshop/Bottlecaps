@@ -97,7 +97,8 @@ namespace Bottlecaps.Controllers
         //public void PostSpace([FromBody]PostedSpace postedSpace)
         {
             Space space = new Space();
-            space.SpaceId = Int32.Parse(postedSpace.SpaceId); //TODO: ADD TRY/CATCH
+            //space.SpaceId = Int32.Parse(postedSpace.SpaceId); //TODO: ADD TRY/CATCH
+            space.SpaceId = _context.Space.Any() ? _context.Space.Select(sp => sp.SpaceId).Max() + 1 : 1;
             space.SpaceName = postedSpace.SpaceName;
             space.ActiveStatus = postedSpace.ActiveStatus;
             space.BackgroundImage = postedSpace.BackgroundImage;
