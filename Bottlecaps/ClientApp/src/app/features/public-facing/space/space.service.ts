@@ -21,7 +21,8 @@ export class SpaceService {
 	addBottlecapToSpace(bottlecapId) {
 		var space = this.createSpace(bottlecapId);
 		this.dataService.placeBottlecapInSpace(space).subscribe(response => {
-        console.log("bottlecap added to space: ", response)
+			console.log("bottlecap added to space: ", response)
+			this.getSpaceBottlecaps();
 		}, err => {
 				console.error(err);
 		})
