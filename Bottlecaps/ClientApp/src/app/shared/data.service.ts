@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Tag, Bottlecap, Profile, Link } from './models';
+import { Tag, Bottlecap, Profile, Link, Space } from './models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,10 @@ export class DataService {
     //TODO: PASS PROFILE ID FROM LOGGED IN USER
 	addBottlecap(bottlecap: Bottlecap) {
 		return this.http.post<Bottlecap>(this.baseUrl + 'api/Bottlecaps', bottlecap);
+	}
+	placeBottlecapInSpace(space: Space) {
+		console.log("space", space);
+		return this.http.post<Bottlecap>(this.baseUrl + 'api/Spaces', space);
 	}
   /**
     * READ (GET)

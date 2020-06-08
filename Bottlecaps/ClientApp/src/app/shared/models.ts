@@ -34,3 +34,12 @@ export class Profile {
 	}
 }
 
+export class Space {
+	public SpaceId?: string;
+	public SpaceName: string;
+	public ActiveStatus: string;
+	public BackgroundImage: string;
+	public DefaultBottlecapId: string;
+	public ProfileId: string;
+}
+

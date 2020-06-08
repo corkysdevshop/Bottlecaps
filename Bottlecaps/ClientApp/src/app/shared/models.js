@@ -34,4 +34,10 @@ var Profile = /** @class */ (function () {
     return Profile;
 }());
 exports.Profile = Profile;
+var Space = /** @class */ (function () {
+    function Space() {
+    }
+    return Space;
+}());
+exports.Space = Space;
 //# sourceMappingURL=models.js.map
