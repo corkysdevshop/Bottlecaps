@@ -25,15 +25,26 @@ namespace Bottlecaps
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // data
+            services.AddCors(options => options.AddPolicy("Cors", builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+
             services.AddDbContext<BottlecapsContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("Bottlecaps")));
+            //services.AddDbContext<UserDbContext>(options =>
+            //    options.UseInMemoryDatabase("user"));
 
-            // identity
-            //services.AddDbContext<IdentityDbContext>(options =>
-                //options.UseSqlServer(Configuration.GetConnectionString("Bottlecaps"),
-                //optionsBuilders =>
-                //optionsBuilders.MigrationsAssembly("Bottlecaps"))); //
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("User"),
+                optionsBuilders =>
+                optionsBuilders.MigrationsAssembly("Bottlecaps"))); //
+
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<UserDbContext>();
+
 
             //services.AddIdentity<IdentityUser, IdentityRole>()
             //    .AddEntityFrameworkStores<IdentityDbContext>()
