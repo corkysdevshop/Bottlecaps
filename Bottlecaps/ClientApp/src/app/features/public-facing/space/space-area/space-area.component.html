@@ -2,11 +2,12 @@
   <div id="space" class="row">
     <img id="space-image" src="assets/Mock-cafe.png" />
 
-    <div class="example-box" id="bottlecap" cdkDrag *ngFor="let space of this.spaceService.spaceBottleCapCollection">
-      <canvas #space width="100" height="100"></canvas>{{space.spaceId}}
-        here
+    <div class="example-box" id="bottlecap" cdkDrag *ngFor="let space of this.spaceCaps">
+      <canvas #space width="100" height="100" (isVisible)="renderText(space)"></canvas>{{space.spaceId}}
+      here
     </div>
 
   </div>
 </div>
 <button (click)="checkSpaces()">Check Spaces</button>
+<button (click)="renderText()">Render Text</button>

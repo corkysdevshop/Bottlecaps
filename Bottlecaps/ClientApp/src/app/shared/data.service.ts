@@ -48,8 +48,8 @@ export class DataService {
 		return this.http.get<Link[]>(this.baseUrl + 'api/Links/' + BottlecapId);
 	}
 
-	getSpaceBottlecaps() {
-		return this.http.get<Space[]>(this.baseUrl + 'api/Spaces');
+	getSpaceBottlecaps(spaces) {
+		return this.http.get<Bottlecap[]>(this.baseUrl + 'api/Spaces',spaces);
 	}
   /**
     * UPDATE (PUT)
