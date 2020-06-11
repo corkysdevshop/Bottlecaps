@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit {
 	}
 
 	register(formData) {
-		console.log('in onSubmit', formData);
-		this.authService.register("random crudentials");
+		//console.log('in onSubmit', formData);
+		this.authService.register(formData);
 	}
 }

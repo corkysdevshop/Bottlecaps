@@ -18,10 +18,9 @@ export class AuthService {
 	}
 
 	register(credentials) {
-		console.log('inside service register method')
-		var options = { 'Content-Type': undefined
-	};
-		this.http.post<any>(`account/register`, credentials).subscribe(
+		console.log('inside service register method with crudentials: ',credentials)
+		var options = { 'Content-Type': undefined };
+		this.http.post<any>(`api/account`, credentials).subscribe(
 			data => {
 			  console.log('response: ',JSON.parse(data.Content));
 			  //this.authenticate(res)

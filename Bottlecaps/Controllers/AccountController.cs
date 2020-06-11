@@ -11,12 +11,13 @@ namespace Bottlecaps.Controllers
 {
     public class Credentials
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string EmailRegister { get; set; }
+        public string PasswordRegister { get; set; }
     }
 
-    [Route("api/[controller]")]
-    [ApiController]
+    [Produces("application/json")]
+    //[ApiController]
+    [Route("api/Account")]
     public class AccountController : ControllerBase
     {
         readonly UserManager<IdentityUser> userManager;
@@ -31,9 +32,9 @@ namespace Bottlecaps.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] Credentials credentials)
         {
-            var user = new IdentityUser { UserName = credentials.Email, Email = credentials.Email };
+            var user = new IdentityUser { UserName = credentials.EmailRegister, Email = credentials.EmailRegister };
 
-            var result = await userManager.CreateAsync(user, credentials.Password);
+            var result = await userManager.CreateAsync(user, credentials.PasswordRegister);
 
             if (!result.Succeeded)
                 return BadRequest(result.Errors);

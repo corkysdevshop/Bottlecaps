@@ -38,7 +38,7 @@ namespace Bottlecaps
             //services.AddDbContext<UserDbContext>(options =>
             //    options.UseInMemoryDatabase("user"));
 
-            services.AddDbContext<IdentityDbContext>(options =>
+            services.AddDbContext<UserDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("User"),
                 optionsBuilders =>
                 optionsBuilders.MigrationsAssembly("Bottlecaps"))); //
