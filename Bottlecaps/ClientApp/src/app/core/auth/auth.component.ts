@@ -18,6 +18,10 @@ export class AuthComponent implements OnInit {
 			email: ['', Validators.required],
       password: ['', Validators.required]
 		})
+		this.formLogin = formBuider.group({
+			email: ['', Validators.required],
+			password: ['', Validators.required]
+		})
 	}
 
 	ngOnInit() {	}
@@ -25,13 +29,5 @@ export class AuthComponent implements OnInit {
 	logIn(formData) {
 		console.log("auth.comp.ts", formData);
 		this.authService.login(formData);
-	}
-
-	register(registerForm) {
-		//console.log('in onSubmit', formData);
-		//this.authService.register(registerForm);
-
-		console.log('this.formRegister', this.formRegister);
-
 	}
 }
