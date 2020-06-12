@@ -1,4 +1,5 @@
 using Bottlecaps.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Bottlecaps
 {
@@ -45,10 +48,25 @@ namespace Bottlecaps
 
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<UserDbContext>();
 
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is the secret phrase")); //TODO: CHANGE THIS TODO: REFACTOR THIS INTO A KEYS FILE, ITS IN THE STARTUP AND REGISTER FILES RIGHT NOW
 
-            //services.AddIdentity<IdentityUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<IdentityDbContext>()
-            //    .AddDefaultTokenProviders();
+            services.AddAuthentication(options =>
+           {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+               options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer( cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = signingKey,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true
+                };
+            }); //TODO: DOUBLE CHECK THE VALIDATE AUDIENCE, ISSUER AND LIFETIME
 
             // defaults
             services.AddControllersWithViews();
@@ -62,6 +80,8 @@ namespace Bottlecaps
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseAuthentication();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -80,10 +100,8 @@ namespace Bottlecaps
                 app.UseSpaStaticFiles();
             }
 
-            app.UseAuthentication();
-
             app.UseRouting();
-
+            app.UseAuthorization();//TODO: MAKE SURE THIS IS IN THE RIGHT SPOT
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

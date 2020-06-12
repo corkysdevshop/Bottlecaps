@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Bottlecaps.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bottlecaps.Controllers
 {
@@ -21,13 +22,16 @@ namespace Bottlecaps.Controllers
         }
 
         // GET: api/Bottlecaps TODO: THIS METHOD CAN PROBABLY GET DELETED
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bottlecap>>> GetBottlecap()
-        {
-           return await _context.Bottlecap.ToListAsync();
+        {            
+            return await _context.Bottlecap.ToListAsync();
         }
 
+        //TODO: ADD AUTHORIZED HEADERS TO ALL RELEVANT METHODS
         // GET: api/Bottlecaps/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Bottlecap>> GetBottlecap(int id)
         {
@@ -41,12 +45,16 @@ namespace Bottlecaps.Controllers
             return bottlecap;
         }
 
+        //TODO: THIS METHOD CAN PROBABLY GET DELETED NOW THAT THE USERID IS DELIVERED IN THE HEADER TOKEN, THERE IS NO LONGER A REASON TO SEND THE PROFILE ID THROUGH THE URL
+        //TODO: DELETE THE PROFILEID SIGNATURE ON THIS METHOD
         // GET: api/Bottlecaps/5
+        [Authorize]
         [HttpGet("mybottlecaps/{profileId}")]
         public async Task<ActionResult<IEnumerable<Bottlecap>>> GetBottlecaps(int profileId)
         {
             //var bottlecap = await _context.Bottlecap.FindAsync(id);
-            var bottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileId == profileId)
+            int userId = Int32.Parse(HttpContext.User.Claims.First().Value);
+            var bottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileId == userId)
                 .ToListAsync();
             
             if (bottlecaps == null)
@@ -60,6 +68,7 @@ namespace Bottlecaps.Controllers
         // PUT: api/Bottlecaps/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBottlecap(int id, Bottlecap bottlecap)
         {
@@ -113,15 +122,23 @@ namespace Bottlecaps.Controllers
                 public string linkText { get; set; }
             }
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Bottlecap>> PostBottlecap([FromBody]PostedBottlecap bottlecapInput)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userId = HttpContext.User.Claims.First().Value;
+
             //ADD BOTTLECAP
             Bottlecap bottlecap = new Bottlecap();
             //TODO: MAKE THESE INTO SOMETHING LIKE A GUID, BUT MORE PERFORMANCE
             bottlecap.BottlecapId = _context.Bottlecap.Any() ? _context.Bottlecap.Select(bc => bc.BottlecapId).Max() + 1 : 1;
             bottlecap.Title = bottlecapInput.title;
-            bottlecap.ProfileId = bottlecapInput.profile.ProfileId;
+            bottlecap.ProfileId = Int32.Parse(userId);
             _context.Bottlecap.Add(bottlecap);
             try
             {
