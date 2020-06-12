@@ -1,17 +1,46 @@
+
+
+<h4>Register a new account</h4>
+<br />
+<div *ngIf="!formRegister.valid"><p>Please enter email and password</p></div>
+<form [formGroup]="formRegister" (ngSubmit)="register()">
+  <input type="email"
+         formControlName="email"
+         placeholder="Email"
+         id="emailRegister"
+         class="form-control"
+         name="emailRegister" />
+  <br />
+  <input type="password"
+         formControlName="password"
+         placeholder="Password"
+         id="passwordRegister"
+         class="form-control"
+         name="passwordRegister" />
+
+  <br />
+
+  <button type="submit"
+          class=""
+          [disabled]="!formRegister.valid">
+    Register
+  </button>
+</form>
+<hr />
 <h4>Log in</h4>
 <br />
-
 <form #logInForm="ngForm" (ngSubmit)="logIn(logInForm.value)">
-  <label for="emailLogin" class="col-md-3 control-label">Email</label>
   <input type="text"
          id="emailLogin"
+         placeholder="Email"
          class="form-control"
          ngModel
          name="emailLogin" />
 
-  <label for="password" class="col-md-3 control-label">Password</label>
+  <br />
   <input type="passwordLogin"
          id="passwordLogin"
+         placeholder="Password"
          class="form-control"
          ngModel
          name="passwordLogin" />
@@ -24,29 +53,5 @@
 
 </form>
 
-<hr />
-<h4>Register a new account</h4>
-<br />
 
-<form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)">
-  <label for="emailRegister" class="col-md-3 control-label">Email</label>
-  <input type="text"
-         id="emailRegister"
-         class="form-control"
-         ngModel
-         name="emailRegister" />
 
-  <label for="password" class="col-md-3 control-label">Password</label>
-  <input type="passwordRegister"
-         id="passwordRegister"
-         class="form-control"
-         ngModel
-         name="passwordRegister" />
-
-  <br />
-  <button type="submit"
-          class="">
-    Register
-  </button>
-
-</form>
