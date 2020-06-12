@@ -3,7 +3,7 @@
 <h4>Register a new account</h4>
 <br />
 <div *ngIf="!formRegister.valid"><p>Please enter email and password</p></div>
-<form [formGroup]="formRegister" (ngSubmit)="register()">
+<form [formGroup]="formRegister" (ngSubmit)="authService.register(formRegister.value)">
   <input type="email"
          formControlName="email"
          placeholder="Email"

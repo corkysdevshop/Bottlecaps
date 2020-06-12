@@ -26,12 +26,4 @@ export class AuthComponent implements OnInit {
 		console.log("auth.comp.ts", formData);
 		this.authService.login(formData);
 	}
-
-	register(registerForm) {
-		//console.log('in onSubmit', formData);
-		//this.authService.register(registerForm);
-
-		console.log('this.formRegister', this.formRegister);
-
-	}
 }
