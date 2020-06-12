@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Bottlecap, Tag, Link } from './../../../shared/models';
+import { Bottlecap, Tag, Link, Space } from './../../../shared/models';
 import { Subject } from 'rxjs';
 import { DataService } from '../../../shared/data.service';
 
@@ -51,9 +51,7 @@ export class BottlecapService {
 		);
 	}
 
-  /**
-    * CREATE
-    */
+  //CREATE
 	addBottlecapToCollection(bottlecap: Bottlecap) {
 		this.dataService.addBottlecap(bottlecap).subscribe(response => {
 			console.log("add bottlecap service response: ",response);
@@ -63,10 +61,8 @@ export class BottlecapService {
 				console.error(err);
 		});
 	}
-  /**
-    * READ
-    */
 
+  //READ
 	getBottlecaps(ProfileId: number) {
 		this.dataService.getMyCollection(ProfileId).subscribe(initialEmptyBottlecaps => {
 			this.bottleCapCollection = [];
@@ -75,13 +71,9 @@ export class BottlecapService {
 		});
 	}
 
-  /**
-  * UPDATE (PUT)
-  */
+  //UPDATE
       //TODO: IMPLEMENT 
-  /**
-    * DELETE (DELETE)
-    */
+  //DELETE
 	deleteBottlecap(bottlecap: Bottlecap) {
 		this.dataService.deleteBottlecap(bottlecap).subscribe(result => {
 			console.log('success: ', result);

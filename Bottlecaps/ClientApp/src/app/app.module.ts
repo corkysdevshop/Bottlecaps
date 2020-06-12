@@ -26,7 +26,7 @@ import { AuthService } from './shared/auth.service';
 	  FormsModule,
     CoreModule,
     SharedModule,
-    FeaturesModule,
+	  FeaturesModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

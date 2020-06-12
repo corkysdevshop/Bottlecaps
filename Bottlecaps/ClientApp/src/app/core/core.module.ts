@@ -7,7 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from '../shared/fetch-data/fetch-data.component';
 import { FeaturesModule } from '../features/features.module';
 import { AuthComponent } from './auth/auth.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from '../features/private/dashboard/dashboard.component';
 import { SpaceComponent } from '../features/public-facing/space/space.component';
 import { MyBottlecapsComponent } from '../features/private/my-bottlecaps/my-bottlecaps.component';
@@ -31,6 +31,7 @@ import { SettingsComponent } from './settings/settings.component';
 	  CommonModule,
 	  FeaturesModule,
 	  FormsModule,
+	  ReactiveFormsModule,
 	  RouterModule.forRoot([
 		  { path: '', component: HomeComponent, pathMatch: 'full'},
 		  { path: 'fetch-data', component: FetchDataComponent },

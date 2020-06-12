@@ -15,7 +15,7 @@
     <form class="form-inline">
       <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" #bottlecap>
         <option selected>Choose...</option><!--TODO: CHCANGE THIS TO "WAITING" WHEN STILL LOADING-->
-        <option *ngFor="let bottlecap of this.bottlecapService.bottleCapCollection" value="{{bottlecap.bottlecapId}}">{{bottlecap.title}}{{bottlecap.bottlecapId}}</option>
+        <option *ngFor="let bottlecap of this.bottlecapService.bottleCapCollection" value="{{bottlecap.bottlecapId}}">{{bottlecap.title}}</option>
       </select>
       <button type="submit" class="btn btn-primary my-1" (click)="placeBottlecap(bottlecap.value)">Place</button>
     </form>

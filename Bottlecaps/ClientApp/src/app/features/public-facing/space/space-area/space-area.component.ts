@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Bottlecap } from '../../../../shared/models';
+import { Bottlecap, Space } from '../../../../shared/models';
 import { SpaceService } from '../space.service';
 
 @Component({
@@ -8,14 +8,21 @@ import { SpaceService } from '../space.service';
   styleUrls: ['./space-area.component.css']
 })
 export class SpaceAreaComponent implements OnInit {
+
 	@ViewChild('bottlecap', { static: true })
 	canvas: ElementRef<HTMLCanvasElement>;
+
+	spaceCaps: Bottlecap[];
+
   constructor(private spaceService: SpaceService) { }
 
 	private ctx: CanvasRenderingContext2D;
 
 	ngOnInit(): void {
 		this.spaceService.getSpaceBottlecaps();
+		this.spaceService.spacesChanged.subscribe(spaces => {
+			this.spaceCaps = spaces.slice();
+		})
   }
 
 	placeBottlecap(title) {
@@ -27,6 +34,11 @@ export class SpaceAreaComponent implements OnInit {
 	}
 
 	checkSpaces() {
-		console.log("spaces: ", this.spaceService.spaceBottleCapCollection);
+		console.log("spaces in this.spaceService.spaceBottleCapCollection: ", this.spaceService.spaceBottleCapCollection);
+		console.log("spaces in this.spaceCaps: ", this.spaceCaps);
+	}
+
+	renderText(space) {
+		console.log("render Text: ");
 	}
 }

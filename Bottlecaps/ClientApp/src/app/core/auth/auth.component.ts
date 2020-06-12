@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-auth',
@@ -10,7 +11,14 @@ import { AuthService } from '../../shared/auth.service';
 })
 export class AuthComponent implements OnInit {
 
-	constructor(private authService: AuthService) {}
+  formRegister
+
+	constructor(private authService: AuthService, private formBuider: FormBuilder) {
+		this.formRegister = formBuider.group({
+			email: ['', Validators.required],
+      password: ['', Validators.required]
+		})
+	}
 
 	ngOnInit() {	}
 
@@ -19,8 +27,11 @@ export class AuthComponent implements OnInit {
 		this.authService.login(formData);
 	}
 
-	register(formData) {
-		console.log('in onSubmit', formData);
-		this.authService.register("random crudentials");
+	register(registerForm) {
+		//console.log('in onSubmit', formData);
+		//this.authService.register(registerForm);
+
+		console.log('this.formRegister', this.formRegister);
+
 	}
 }

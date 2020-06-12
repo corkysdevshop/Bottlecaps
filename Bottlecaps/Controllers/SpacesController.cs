@@ -22,9 +22,25 @@ namespace Bottlecaps.Controllers
 
         // GET: api/Spaces
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Space>>> GetSpace()
+        public async Task<ActionResult<IEnumerable<Bottlecap>>> GetSpace()
         {
-            return await _context.Space.ToListAsync();
+            var allSpaces = await _context.Space.ToListAsync();
+            List<Bottlecap> spaceBottlecaps = new List<Bottlecap>();
+            foreach (Space space in allSpaces)
+            {
+                Bottlecap _bottlecap = await _context.Bottlecap.FindAsync(space.SpaceId);
+                Bottlecap bottlecap = new Bottlecap();
+                bottlecap.Title = _bottlecap.Title;
+
+                List<Link> _links = await _context.Link.Where(lnk => lnk.BottlecapId == bottlecap.BottlecapId).ToListAsync();
+                bottlecap.Link = _links;
+                
+                List<Tag> _tags = await _context.Tag.Where(tag => tag.BottlecapId == bottlecap.BottlecapId).ToListAsync();
+                bottlecap.Tag = _tags;
+
+                spaceBottlecaps.Add(bottlecap);
+            }
+            return spaceBottlecaps;
         }
 
         // GET: api/Spaces/5
