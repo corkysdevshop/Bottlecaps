@@ -18,9 +18,8 @@ export class AuthService {
 	}
 
 	register(credentials) {
-		var options = { 'Content-Type': undefined };
 		this.http.post<any>(`api/account`, credentials).subscribe(data => {
-			  localStorage.setItem('token', data);
+			  this.authenticate(data);
 			},
 			error => {
 				console.log('error: ', error);
@@ -32,36 +31,25 @@ export class AuthService {
 	}
 
 	login(credentials) {
-		console.log('inside autho.service.ts login()')
-   
-		this.authenticate("eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.e30."); // mocked authorization JWT Token
-
-		//this.http.post<any>(`account/login`, credentials).subscribe(res => {
-		//		console.log("response: ",res); //TODO: FIGURE OUT WHY THISIS GIVING
-		//		//SyntaxError: Unexpected token e in JSON at position 0
-		//		//at JSON.parse(<anonymous>)
-		//		//at XMLHttpRequest.onLoad(https://localhost:44327/vendor.js:9948:51)
-		//		//	at ZoneDelegate.invokeTask(https://localhost:44327/polyfills.js:3240:31)
-		//		//		at Object.onInvokeTask(https://localhost:44327/vendor.js:68379:33)
-		//		//			at ZoneDelegate.invokeTask(https://localhost:44327/polyfills.js:3239:60)
-		//		//				at Zone.runTask(https://localhost:44327/polyfills.js:3017:47)
-		//		//					at ZoneTask.invokeTask[as invoke](https://localhost:44327/polyfills.js:3314:34)
-		//		//						at invokeTask (https://localhost:44327/polyfills.js:4452:14)
-		//		//							at XMLHttpRequest.globalZoneAwareCallback (https://localhost:44327/polyfills.js:4489:21)			
-                
-		//		//localStorage.setItem('token', res);
-		//	  //this.authenticate(res)
-		//	}
-		// )
+		this.http.post<any>(`api/account/login`, credentials).subscribe(data => {
+			this.authenticate(data);
+		},
+			error => {
+				console.log('error: ', error);
+			},
+			() => {
+				console.log('completed');
+			}
+		)
 	}
 
 	authenticate(res) {
-		localStorage.setItem('token', res)
-
-		this.router.navigate(['dashboard'])
+		localStorage.setItem('token', res);
+		this.router.navigate(['dashboard']);
 	}
 
 	logout() {
-		localStorage.removeItem('token')
+		localStorage.removeItem('token') //TODO: RENAME THIS TOKEN TO SOMETHING LESS GENERIC (ALSO WHERE IT'S SET)
+		this.router.navigate(['']);
 	}
 }

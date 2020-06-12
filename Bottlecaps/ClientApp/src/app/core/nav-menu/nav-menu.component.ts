@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../shared/auth.service';
+//import { AuthService } from './shared/auth.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,7 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+
+
   isExpanded = false;
+
+	constructor(private auth: AuthService) {}
 
   collapse() {
     this.isExpanded = false;

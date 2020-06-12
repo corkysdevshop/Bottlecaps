@@ -18,6 +18,10 @@ export class AuthComponent implements OnInit {
 			email: ['', Validators.required],
       password: ['', Validators.required]
 		})
+		this.formLogin = formBuider.group({
+			email: ['', Validators.required],
+			password: ['', Validators.required]
+		})
 	}
 
 	ngOnInit() {	}
