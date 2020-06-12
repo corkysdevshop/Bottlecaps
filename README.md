@@ -9,7 +9,6 @@ This project aims to create social bonds between those with similar interests, s
 ---
 
 ### [Progressive Iteration Demo](http://www.bottlecaps.link/)
-### [Open Source](https://github.com/corkysdevshop/Bottlecaps)
 
 ---
 
