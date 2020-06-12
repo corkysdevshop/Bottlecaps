@@ -53,8 +53,8 @@ namespace Bottlecaps.Controllers
         public async Task<ActionResult<IEnumerable<Bottlecap>>> GetBottlecaps(int profileId)
         {
             //var bottlecap = await _context.Bottlecap.FindAsync(id);
-            int userId = Int32.Parse(HttpContext.User.Claims.First().Value);
-            var bottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileId == userId)
+            string userId = HttpContext.User.Claims.First().Value;
+            var bottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileStringId == userId)
                 .ToListAsync();
             
             if (bottlecaps == null)
@@ -131,14 +131,14 @@ namespace Bottlecaps.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userId = HttpContext.User.Claims.First().Value;
+            string userId = HttpContext.User.Claims.First().Value;
 
             //ADD BOTTLECAP
             Bottlecap bottlecap = new Bottlecap();
             //TODO: MAKE THESE INTO SOMETHING LIKE A GUID, BUT MORE PERFORMANCE
             bottlecap.BottlecapId = _context.Bottlecap.Any() ? _context.Bottlecap.Select(bc => bc.BottlecapId).Max() + 1 : 1;
             bottlecap.Title = bottlecapInput.title;
-            bottlecap.ProfileId = Int32.Parse(userId);
+            bottlecap.ProfileStringId = userId;
             _context.Bottlecap.Add(bottlecap);
             try
             {
