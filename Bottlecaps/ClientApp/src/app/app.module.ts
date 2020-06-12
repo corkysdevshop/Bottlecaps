@@ -14,6 +14,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { FeaturesModule } from './features/features.module';
 import { AuthService } from './shared/auth.service';
+import { AuthInterceptor } from './shared/auth.interceptor';
 
 
 @NgModule({
@@ -28,7 +29,12 @@ import { AuthService } from './shared/auth.service';
     SharedModule,
 	  FeaturesModule,
   ],
-  providers: [AuthService],
+	providers: [AuthService,
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: AuthInterceptor,
+			multi: true
+		}	],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
