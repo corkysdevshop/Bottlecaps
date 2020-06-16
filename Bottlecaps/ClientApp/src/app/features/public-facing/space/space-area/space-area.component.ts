@@ -20,12 +20,22 @@ export class SpaceAreaComponent implements OnInit {
 		})
   }
 
-	placeBottlecap(title) {
-		this.ctx = this.canvas.nativeElement.getContext('2d');
-		this.ctx.arc(50, 50, 40, 0, 2 * Math.PI);
-		this.ctx.stroke();
-		//this.ctx.font = "30px Arial";
-		this.ctx.fillText(title, 10, 50);
+	onDragEnded(event) {
+		let element = event.source.getRootElement();
+		let boundingClientRect = element.getBoundingClientRect();
+		let parentPosition = this.getPosition(element);
+		console.log('x: ' + (boundingClientRect.x - parentPosition.left), 'y: ' + (boundingClientRect.y - parentPosition.top));
+	}
+
+	getPosition(el) {
+		let x = 0;
+		let y = 0;
+		while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+			x += el.offsetLeft - el.scrollLeft;
+			y += el.offsetTop - el.scrollTop;
+			el = el.offsetParent;
+		}
+		return { top: y, left: x };
 	}
 
 	checkSpaces() {

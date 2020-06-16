@@ -2,7 +2,10 @@
   <div id="space" class="row">
     <img id="space-image" src="assets/Mock-cafe.png" />
 
-    <div class="bottlecap" cdkDrag *ngFor="let spaceCap of this.spaceCaps">
+    <div class="bottlecap"
+         cdkDrag
+         *ngFor="let spaceCap of this.spaceCaps"
+         (cdkDragEnded)="onDragEnded($event)">
       {{spaceCap.title}}
       <!--<canvas #space  (isVisible)="renderText(space)"></canvas>-->
     </div>
