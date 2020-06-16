@@ -9,14 +9,9 @@ import { SpaceService } from '../space.service';
 })
 export class SpaceAreaComponent implements OnInit {
 
-	@ViewChild('bottlecap', { static: true })
-	canvas: ElementRef<HTMLCanvasElement>;
-
 	spaceCaps: Bottlecap[];
 
   constructor(private spaceService: SpaceService) { }
-
-	private ctx: CanvasRenderingContext2D;
 
 	ngOnInit(): void {
 		this.spaceService.getSpaceBottlecaps();

@@ -2,9 +2,9 @@
   <div id="space" class="row">
     <img id="space-image" src="assets/Mock-cafe.png" />
 
-    <div class="example-box" id="bottlecap" cdkDrag *ngFor="let spaceCap of this.spaceCaps"   style="background-color: blanchedalmond;">
+    <div class="bottlecap" cdkDrag *ngFor="let spaceCap of this.spaceCaps">
       {{spaceCap.title}}
-      <canvas #space width="25" height="50" (isVisible)="renderText(space)"></canvas>
+      <!--<canvas #space  (isVisible)="renderText(space)"></canvas>-->
     </div>
   </div>
 </div>
