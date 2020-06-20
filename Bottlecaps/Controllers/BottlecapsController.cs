@@ -50,11 +50,11 @@ namespace Bottlecaps.Controllers
         // GET: api/Bottlecaps/5
         [Authorize]
         [HttpGet("mybottlecaps/{profileId}")]
-        public async Task<ActionResult<IEnumerable<Bottlecap>>> GetBottlecaps(int profileId)
+        public async Task<ActionResult<IEnumerable<Bottlecap>>> GetBottlecaps()
         {
             //var bottlecap = await _context.Bottlecap.FindAsync(id);
             string userId = HttpContext.User.Claims.First().Value;
-            var bottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileStringId == userId)
+            var bottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileId == userId)
                 .ToListAsync();
             
             if (bottlecaps == null)
@@ -138,7 +138,7 @@ namespace Bottlecaps.Controllers
             //TODO: MAKE THESE INTO SOMETHING LIKE A GUID, BUT MORE PERFORMANCE
             bottlecap.BottlecapId = _context.Bottlecap.Any() ? _context.Bottlecap.Select(bc => bc.BottlecapId).Max() + 1 : 1;
             bottlecap.Title = bottlecapInput.title;
-            bottlecap.ProfileStringId = userId;
+            bottlecap.ProfileId = userId;
             _context.Bottlecap.Add(bottlecap);
             try
             {
