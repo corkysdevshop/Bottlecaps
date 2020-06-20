@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 export class SpaceService {
 	spacesChanged = new Subject<Bottlecap[]>();
 	spaceBottleCapCollection: Bottlecap[] = [];
+
 	constructor(private dataService: DataService) {
 		this.spacesChanged.subscribe(spaceCaps => {
 			this.spaceBottleCapCollection = [];
@@ -19,6 +20,7 @@ export class SpaceService {
 
 	//TODO: WHEN A BOTTLECAP IS 'PLACED' ADD IT TO THE SPACE TABLE AND RETRIEVE ALL THE BOTTLECAPS FOR THIS SPACE FROM THAT TABLE
 	//TODO: ALSO, FIGURE OUT WHICH PROPERTY IN TABLE CAN BE USED TO ENSURE THE OWNER OF THE BOTTLECAP IS THE ONLY ONE THAT CAN EDIT IT
+  //CREATE
 	addBottlecapToSpace(bottlecapId) {
 		var space = this.createSpace(bottlecapId);
 		this.dataService.placeBottlecapInSpace(space).subscribe(response => {
@@ -43,7 +45,7 @@ export class SpaceService {
 
 	//READ
 	getSpaceBottlecaps() {
-		var spaces = this.spaceLoop();
+		var spaces = this.spaceBottleCapCollection;
 		this.dataService.getSpaceBottlecaps(spaces)
 			.pipe(map(responseData => {
 				const bottlecapArray = [];
@@ -61,9 +63,9 @@ export class SpaceService {
 			});
 	}
 
-	spaceLoop() {
-
-		this.spaceBottleCapCollection
+  //UPDATE
+	updatePlace(space: Space) {
 
 	}
+  //DELETE
 }

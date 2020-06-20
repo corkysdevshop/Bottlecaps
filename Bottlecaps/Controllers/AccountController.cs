@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Bottlecaps.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -25,11 +26,13 @@ namespace Bottlecaps.Controllers
     {
         readonly UserManager<IdentityUser> userManager;
         readonly SignInManager<IdentityUser> signInManager;
+        private readonly BottlecapsContext _context;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, BottlecapsContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            _context = context;
         }
 
         [HttpPost]
@@ -41,6 +44,22 @@ namespace Bottlecaps.Controllers
 
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
+
+            // Add profile
+            _context.Profile.Add(new Profile()
+            {
+                Email = credentials.Email,
+                ProfileCap = user.Id
+            });
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
 
             await signInManager.SignInAsync(user, isPersistent: false);
 

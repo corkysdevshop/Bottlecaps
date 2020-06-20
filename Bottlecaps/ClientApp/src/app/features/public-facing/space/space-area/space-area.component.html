@@ -5,11 +5,10 @@
     <div class="bottlecap"
          cdkDrag
          *ngFor="let spaceCap of this.spaceCaps"
-         (cdkDragEnded)="onDragEnded($event)">
+         (cdkDragEnded)="onDragEnded($event, spaceCap)">
       {{spaceCap.title}}
       <!--<canvas #space  (isVisible)="renderText(space)"></canvas>-->
     </div>
   </div>
 </div>
 <button (click)="checkSpaces()">Check Spaces</button>
-<button (click)="renderText()">Render Text</button>

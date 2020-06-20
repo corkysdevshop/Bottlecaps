@@ -20,11 +20,19 @@ export class SpaceAreaComponent implements OnInit {
 		})
   }
 
-	onDragEnded(event) {
+	onDragEnded(event, spaceCapId) {
 		let element = event.source.getRootElement();
 		let boundingClientRect = element.getBoundingClientRect();
 		let parentPosition = this.getPosition(element);
+		let x = boundingClientRect.x - parentPosition.left;
+		let y = boundingClientRect.y - parentPosition.top;
 		console.log('x: ' + (boundingClientRect.x - parentPosition.left), 'y: ' + (boundingClientRect.y - parentPosition.top));
+		this.updatePlace(x, y, spaceCapId);
+	}
+
+	updatePlace(x, y, spaceCapId) {
+		console.log("spaceCapId: ", spaceCapId);
+		this.spaceService.updatePlace(new Space());
 	}
 
 	getPosition(el) {
@@ -41,9 +49,5 @@ export class SpaceAreaComponent implements OnInit {
 	checkSpaces() {
 		console.log("spaces in this.spaceService.spaceBottleCapCollection: ", this.spaceService.spaceBottleCapCollection);
 		console.log("spaces in this.spaceCaps: ", this.spaceCaps);
-	}
-
-	renderText(space) {
-		console.log("render Text: ");
 	}
 }
