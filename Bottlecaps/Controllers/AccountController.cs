@@ -49,7 +49,7 @@ namespace Bottlecaps.Controllers
             _context.Profile.Add(new Profile()
             {
                 Email = credentials.Email,
-                ProfileCap = user.Id
+                ProfileId = user.Id
             });
             try
             {

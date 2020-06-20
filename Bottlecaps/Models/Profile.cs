@@ -12,7 +12,7 @@ namespace Bottlecaps.Models
             Space = new HashSet<Space>();
         }
 
-        public int ProfileId { get; set; }
+        public string ProfileId { get; set; }
         public string Fname { get; set; }
         public string Lname { get; set; }
         public string Email { get; set; }

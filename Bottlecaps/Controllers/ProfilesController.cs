@@ -29,7 +29,7 @@ namespace Bottlecaps.Controllers
 
         // GET: api/Profiles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Profile>> GetProfile(int id)
+        public async Task<ActionResult<Profile>> GetProfile(string id)
         {
             var profile = await _context.Profile.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace Bottlecaps.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProfile(int id, Profile profile)
+        public async Task<IActionResult> PutProfile(string id, Profile profile)
         {
             if (id != profile.ProfileId)
             {
@@ -115,7 +115,7 @@ namespace Bottlecaps.Controllers
             return profile;
         }
 
-        private bool ProfileExists(int id)
+        private bool ProfileExists(string id)
         {
             return _context.Profile.Any(e => e.ProfileId == id);
         }

@@ -15,7 +15,7 @@ namespace Bottlecaps.Models
         public string Color { get; set; }
         public string PositionX { get; set; }
         public string PositionY { get; set; }
-        public int? ProfileId { get; set; }
+        public string ProfileId { get; set; }
         public string ProfileStringId { get; set; }
         public string Title { get; set; }
 
