@@ -28,6 +28,15 @@ namespace Bottlecaps.Controllers
             List<Bottlecap> placedBottlecaps = new List<Bottlecap>();
             //TODO: REFACTOR THIS SO IT JUST RETURNS THE PROFILEiD COLUMN FROM SPACE TABLE
             var allSpaces = await _context.Space.ToListAsync();
+            string sql = "SELECT  bc.BottlecapId" +
+                ", bc.Color" +
+                ", bc.ProfileId" +
+                ", sp.ProfileId" +
+                ", bc.Title" +
+                "FROM  dbo.Space sp" +
+                "LEFT JOIN Bottlecap bc" +
+                "ON sp.ProfileId = bc.ProfileId;";
+ 
             foreach (Space space in allSpaces)
             {
                 //finds all (space)bottlecaps that have been placed in space
@@ -36,9 +45,11 @@ namespace Bottlecaps.Controllers
                 //placedBottlecaps.Add(_bottlecap);
 
                 //placedBottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileId == space.ProfileId).ToListAsync();
+                //TODO: REFACTOR THIS INTO A JOIN
                 List<Bottlecap> aProfilesCaps = await _context.Bottlecap.Where(bc => bc.ProfileId == space.ProfileId).ToListAsync();
                 foreach (Bottlecap bottlecap in aProfilesCaps)
                 {
+                    bottlecap.ProfileId = null;
                     placedBottlecaps.Add(bottlecap);
                 }
             }
@@ -135,8 +146,9 @@ namespace Bottlecaps.Controllers
             //space.SpaceId = Int32.Parse(postedSpace.SpaceId); //TODO: ADD TRY/CATCH
             //var max = (_context.Space.Select(sp => sp.SpaceId).Max() + 1).ToString();
             //space.SpaceId = _context.Space.Any() ? max : 1.ToString();
-            Guid obj = new Guid();
-            space.SpaceId = obj.ToString(); //TODO: CHECK FOR SAME GUID?
+            string obj = Guid.NewGuid().ToString();
+            
+            space.SpaceId = obj; //TODO: CHECK FOR SAME GUID?
             space.SpaceName = postedSpace.SpaceName;
             space.ActiveStatus = postedSpace.ActiveStatus;
             space.BackgroundImage = postedSpace.BackgroundImage;
