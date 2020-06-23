@@ -22,6 +22,7 @@ export class SpaceService {
 	//TODO: ALSO, FIGURE OUT WHICH PROPERTY IN TABLE CAN BE USED TO ENSURE THE OWNER OF THE BOTTLECAP IS THE ONLY ONE THAT CAN EDIT IT
   //CREATE
 	addBottlecapToSpace(bottlecapId) {
+		console.log("bottlecapId: ", bottlecapId);
 		var space = this.createSpace(bottlecapId);
 		this.dataService.placeBottlecapInSpace(space).subscribe(response => {
 			console.log("bottlecap added to space: ", response)
@@ -46,6 +47,7 @@ export class SpaceService {
 	//READ
 	getSpaceBottlecaps() {
 		var spaces = this.spaceBottleCapCollection;
+		console.log("spaces: ", spaces);
 		this.dataService.getSpaceBottlecaps(spaces)
 			.pipe(map(responseData => {
 				const bottlecapArray = [];

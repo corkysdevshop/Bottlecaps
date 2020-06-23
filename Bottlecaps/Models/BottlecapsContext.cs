@@ -185,6 +185,14 @@ namespace Bottlecaps.Models
                     .HasMaxLength(30)
                     .IsFixedLength();
 
+                entity.Property(e => e.PositionX)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.PositionY)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
                 entity.HasOne(d => d.Profile)
                     .WithMany(p => p.Space)
                     .HasForeignKey(d => d.ProfileId)

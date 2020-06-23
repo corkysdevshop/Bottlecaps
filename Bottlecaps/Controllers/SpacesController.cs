@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Bottlecaps.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bottlecaps.Controllers
 {
@@ -24,23 +25,36 @@ namespace Bottlecaps.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bottlecap>>> GetSpace()
         {
+            List<Bottlecap> placedBottlecaps = new List<Bottlecap>();
+            //TODO: REFACTOR THIS SO IT JUST RETURNS THE PROFILEiD COLUMN FROM SPACE TABLE
             var allSpaces = await _context.Space.ToListAsync();
-            List<Bottlecap> spaceBottlecaps = new List<Bottlecap>();
             foreach (Space space in allSpaces)
             {
-                Bottlecap _bottlecap = await _context.Bottlecap.FindAsync(space.SpaceId);
-                Bottlecap bottlecap = new Bottlecap();
-                bottlecap.Title = _bottlecap.Title;
+                //finds all (space)bottlecaps that have been placed in space
+                //Bottlecap _bottlecap = await _context.Bottlecap.FindAsync(Int32.Parse(space.DefaultBottlecapId)); //TODO: THIS IS DUMB
+                //Bottlecap _bottlecap = await _context.Bottlecap.FindAsync(space.ProfileId);
+                //placedBottlecaps.Add(_bottlecap);
+
+                //placedBottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileId == space.ProfileId).ToListAsync();
+                List<Bottlecap> aProfilesCaps = await _context.Bottlecap.Where(bc => bc.ProfileId == space.ProfileId).ToListAsync();
+                foreach (Bottlecap bottlecap in aProfilesCaps)
+                {
+                    placedBottlecaps.Add(bottlecap);
+                }
+            }
+            foreach (Bottlecap bottlecap in placedBottlecaps)
+            {
+                //Builds bottlecap on server
+                Bottlecap _placedBottlecap = new Bottlecap();
+                _placedBottlecap.Title = bottlecap.Title; //TODO: DELETE THIS
 
                 List<Link> _links = await _context.Link.Where(lnk => lnk.BottlecapId == bottlecap.BottlecapId).ToListAsync();
-                bottlecap.Link = _links;
+                _placedBottlecap.Link = _links;
                 
                 List<Tag> _tags = await _context.Tag.Where(tag => tag.BottlecapId == bottlecap.BottlecapId).ToListAsync();
-                bottlecap.Tag = _tags;
-
-                spaceBottlecaps.Add(bottlecap);
+                _placedBottlecap.Tag = _tags;
             }
-            return spaceBottlecaps;
+            return placedBottlecaps;
         }
 
         // GET: api/Spaces/5
@@ -57,11 +71,12 @@ namespace Bottlecaps.Controllers
             return space;
         }
 
+        // TODO: space.profileID must be used to update the x,y position
         // PUT: api/Spaces/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSpace(int id, Space space)
+        public async Task<IActionResult> PutSpace(string id, Space space)
         {
             if (id != space.SpaceId)
             {
@@ -104,22 +119,29 @@ namespace Bottlecaps.Controllers
 
             //public ProfileId: number;
             public string ProfileId { get; set; }
+            public int BottlecapId { get; set; }
         }
         // POST: api/Spaces
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Space>> PostSpace([FromBody]PostedSpace postedSpace)
         //public void PostSpace([FromBody]PostedSpace postedSpace)
         {
+            string userId = HttpContext.User.Claims.First().Value;
+            Bottlecap _bottlecap = await _context.Bottlecap.FindAsync(postedSpace.BottlecapId);
             Space space = new Space();
             //space.SpaceId = Int32.Parse(postedSpace.SpaceId); //TODO: ADD TRY/CATCH
-            space.SpaceId = _context.Space.Any() ? _context.Space.Select(sp => sp.SpaceId).Max() + 1 : 1;
+            //var max = (_context.Space.Select(sp => sp.SpaceId).Max() + 1).ToString();
+            //space.SpaceId = _context.Space.Any() ? max : 1.ToString();
+            Guid obj = new Guid();
+            space.SpaceId = obj.ToString(); //TODO: CHECK FOR SAME GUID?
             space.SpaceName = postedSpace.SpaceName;
             space.ActiveStatus = postedSpace.ActiveStatus;
             space.BackgroundImage = postedSpace.BackgroundImage;
-            space.DefaultBottlecapId = null;
-            space.ProfileId = null;
+            space.DefaultBottlecapId = postedSpace.BottlecapId.ToString();
+            space.ProfileId = userId;
 
             Console.WriteLine(postedSpace);
             _context.Space.Add(space);
@@ -158,7 +180,7 @@ namespace Bottlecaps.Controllers
             return space;
         }
 
-        private bool SpaceExists(int id)
+        private bool SpaceExists(string id)
         {
             return _context.Space.Any(e => e.SpaceId == id);
         }

@@ -16,6 +16,7 @@ namespace Bottlecaps.Models
         public string PositionX { get; set; }
         public string PositionY { get; set; }
         public string ProfileId { get; set; }
+        public string ProfileStringId { get; set; }
         public string Title { get; set; }
 
         public virtual Profile Profile { get; set; }

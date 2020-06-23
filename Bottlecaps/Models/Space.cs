@@ -10,12 +10,14 @@ namespace Bottlecaps.Models
             Session = new HashSet<Session>();
         }
 
-        public int SpaceId { get; set; }
+        public string SpaceId { get; set; }
         public string SpaceName { get; set; }
         public string ActiveStatus { get; set; }
         public string BackgroundImage { get; set; }
-        public int? DefaultBottlecapId { get; set; }
+        public string DefaultBottlecapId { get; set; }
         public string ProfileId { get; set; }
+        public string PositionX { get; set; }
+        public string PositionY { get; set; }
 
         public virtual Profile Profile { get; set; }
         public virtual ICollection<Session> Session { get; set; }

@@ -135,8 +135,9 @@ namespace Bottlecaps.Controllers
 
             //ADD BOTTLECAP
             Bottlecap bottlecap = new Bottlecap();
-            //TODO: MAKE THESE INTO SOMETHING LIKE A GUID, BUT MORE PERFORMANCE
-            bottlecap.BottlecapId = _context.Bottlecap.Any() ? _context.Bottlecap.Select(bc => bc.BottlecapId).Max() + 1 : 1;
+            
+            int bcId = _context.Bottlecap.Any() ? _context.Bottlecap.Select(bc => bc.BottlecapId).Max() + 1 : 1;
+            bottlecap.BottlecapId = bcId; //TODO: MAKE THESE INTO SOMETHING LIKE A GUID, SO IT CAN DETATCH FROM THE PROFILE THAT CREATED IT
             bottlecap.Title = bottlecapInput.title;
             bottlecap.ProfileId = userId;
             _context.Bottlecap.Add(bottlecap);
