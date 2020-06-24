@@ -20,22 +20,23 @@ namespace Bottlecaps.Controllers
         {
             _context = context;
         }
-
+        // THIS GETS ALL THE SPACES IN THE SPACES TABLE AND TRANSFORMS THEM INTO BOTTLECAPS
         // GET: api/Spaces
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bottlecap>>> GetSpace()
         {
             List<Bottlecap> placedBottlecaps = new List<Bottlecap>();
             //TODO: REFACTOR THIS SO IT JUST RETURNS THE PROFILEiD COLUMN FROM SPACE TABLE
-            var allSpaces = await _context.Space.ToListAsync();
-            string sql = "SELECT  bc.BottlecapId" +
-                ", bc.Color" +
-                ", bc.ProfileId" +
-                ", sp.ProfileId" +
-                ", bc.Title" +
-                "FROM  dbo.Space sp" +
-                "LEFT JOIN Bottlecap bc" +
-                "ON sp.ProfileId = bc.ProfileId;";
+            List<Space> allSpaces = await _context.Space.ToListAsync();
+            //string sql = "SELECT  bc.BottlecapId " +
+            //    ", bc.Color " +
+            //    ", bc.ProfileId " +
+            //    ", sp.ProfileId " +
+            //    ", bc.Title " +
+            //    "FROM  Space sp " +
+            //    "LEFT JOIN Bottlecap bc " +
+            //    "ON sp.ProfileId = bc.ProfileId; ";
+            //var response = await _context.Database.ExecuteSqlRawAsync(sql);
  
             foreach (Space space in allSpaces)
             {
@@ -45,12 +46,24 @@ namespace Bottlecaps.Controllers
                 //placedBottlecaps.Add(_bottlecap);
 
                 //placedBottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileId == space.ProfileId).ToListAsync();
+
                 //TODO: REFACTOR THIS INTO A JOIN
-                List<Bottlecap> aProfilesCaps = await _context.Bottlecap.Where(bc => bc.ProfileId == space.ProfileId).ToListAsync();
-                foreach (Bottlecap bottlecap in aProfilesCaps)
+                try
                 {
-                    bottlecap.ProfileId = null;
-                    placedBottlecaps.Add(bottlecap);
+                   List<Bottlecap> allProfilesCaps = await _context.Bottlecap.Where(bc => bc.ProfileId == space.ProfileId).ToListAsync();
+                   List<Bottlecap> placedProfileCaps = allProfilesCaps.Where(pc => pc.BottlecapId == Int32.Parse(space.DefaultBottlecapId)).ToList(); 
+                    if (placedProfileCaps.Any())
+                    {
+                        foreach (Bottlecap bottlecap in placedProfileCaps)
+                        {
+                            bottlecap.ProfileId = null;
+                            placedBottlecaps.Add(bottlecap);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             }
             foreach (Bottlecap bottlecap in placedBottlecaps)
@@ -130,7 +143,6 @@ namespace Bottlecaps.Controllers
 
             //public ProfileId: number;
             public string ProfileId { get; set; }
-            public int BottlecapId { get; set; }
         }
         // POST: api/Spaces
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
@@ -140,19 +152,22 @@ namespace Bottlecaps.Controllers
         public async Task<ActionResult<Space>> PostSpace([FromBody]PostedSpace postedSpace)
         //public void PostSpace([FromBody]PostedSpace postedSpace)
         {
-            string userId = HttpContext.User.Claims.First().Value;
-            Bottlecap _bottlecap = await _context.Bottlecap.FindAsync(postedSpace.BottlecapId);
+            string userId = HttpContext.User.Claims.First().Value; //TODO: CHECK IF I NEED TO USE THE AUTHORIZE DECORATOR OR IF I CAN JUST USE A USERID TO CHECK OR SOMETHING
+
             Space space = new Space();
             //space.SpaceId = Int32.Parse(postedSpace.SpaceId); //TODO: ADD TRY/CATCH
             //var max = (_context.Space.Select(sp => sp.SpaceId).Max() + 1).ToString();
             //space.SpaceId = _context.Space.Any() ? max : 1.ToString();
-            string obj = Guid.NewGuid().ToString();
+            string obj = Guid.NewGuid().ToString("N");
             
             space.SpaceId = obj; //TODO: CHECK FOR SAME GUID?
             space.SpaceName = postedSpace.SpaceName;
             space.ActiveStatus = postedSpace.ActiveStatus;
             space.BackgroundImage = postedSpace.BackgroundImage;
-            space.DefaultBottlecapId = postedSpace.BottlecapId.ToString();
+
+            space.DefaultBottlecapId = postedSpace.SpaceId.ToString(); //THIS CHANGES PLACES ON THE OBJECT BECAUSE ONCE ITS IN THE WILD, THE SPACE NEEDS A GUID. THIS postedSpace.SpaceId is the original Bottlecap.BottlecapId (PK)
+            //TODO: THIS IS BAD, IT ALL SHOULD BE STRING OR INT
+
             space.ProfileId = userId;
 
             Console.WriteLine(postedSpace);
