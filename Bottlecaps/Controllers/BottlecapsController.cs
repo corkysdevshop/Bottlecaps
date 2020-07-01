@@ -70,14 +70,14 @@ namespace Bottlecaps.Controllers
         // more details see https://aka.ms/RazorPagesCRUD.
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBottlecap(int id, Bottlecap bottlecap)
+        public async Task<IActionResult> PutBottlecap([FromBody]PostedSpace space)
         {
-            if (id != bottlecap.BottlecapId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(bottlecap).State = EntityState.Modified;
+            //_context.Entry(space.SpaceId).State = EntityState.Modified;
+            int spaceId = Int32.Parse(space.SpaceId);
+            Bottlecap bottlecap = await _context.Bottlecap.FindAsync(spaceId);
+            bottlecap.PositionX = space.PositionX;
+            bottlecap.PositionY = space.PositionY;
+            //bottlecap.ProfileId = null; TODO: FIGURE OUT IF ITS OK TO PASS PROFILE ID BACK, SINCE IT SHOULD BE ENCRYPTED WITH HTTPS ANYWAY. IF NOT I'LL HAVE TO REFACTOR SINCE ITS ALREADY BEING RETURED TO THE CLIENT IN THE GET BOTTLECAPS METHOD. 
 
             try
             {
@@ -85,7 +85,7 @@ namespace Bottlecaps.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BottlecapExists(id))
+                if (!BottlecapExists(spaceId))
                 {
                     return NotFound();
                 }
@@ -95,7 +95,7 @@ namespace Bottlecaps.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(bottlecap);
         }
 
         // POST: api/Bottlecaps

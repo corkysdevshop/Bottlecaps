@@ -99,8 +99,9 @@ namespace Bottlecaps.Controllers
         // PUT: api/Spaces/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSpace(string id, Space space)
+        public async Task<IActionResult> PutSpace(string id, PostedSpace space)
         {
             if (id != space.SpaceId)
             {
@@ -126,23 +127,6 @@ namespace Bottlecaps.Controllers
             }
 
             return NoContent();
-        }
-        public class PostedSpace
-        {
-            //public SpaceId?: number;
-            public string SpaceId { get; set; }
-            //public SpaceName: string;
-            public string SpaceName { get; set; }
-            //public ActiveStatus: string;
-            public string ActiveStatus { get; set; }
-            //public BackgroundImage: string;
-            public string BackgroundImage { get; set; }
-
-            //public DefaultBottlecapId: number;
-            public string DefaultBottlecapId { get; set; }
-
-            //public ProfileId: number;
-            public string ProfileId { get; set; }
         }
         // POST: api/Spaces
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for

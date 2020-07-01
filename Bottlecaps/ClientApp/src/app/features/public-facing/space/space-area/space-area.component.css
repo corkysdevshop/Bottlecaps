@@ -1,5 +1,5 @@
 #space {
-  display: inline-block;
+  /*display: inline-block;*/
   position: relative;
   height: 300px; /* TODO: DEFINE AN APPROPRIATE SIZE FOR THE AREA */
 }

@@ -1,14 +1,19 @@
 <div class="container">
-  <div id="space" class="row">
-    <img id="space-image" src="assets/Mock-cafe.png" />
+  <div id="space" class="row space-image">
 
-    <div class="bottlecap"
-         cdkDrag
-         *ngFor="let spaceCap of this.spaceCaps"
-         (cdkDragEnded)="onDragEnded($event, spaceCap)">
-      {{spaceCap.title}}
-      <!--<canvas #space  (isVisible)="renderText(space)"></canvas>-->
+      <img id="space-image" src="assets/Mock-cafe.png" />
+      <div class="bottlecap"
+            cdkDragBoundary=".space-image"
+            cdkDrag
+            *ngFor="let spaceCap of this.spaceCaps"
+            (cdkDragEnded)="onDragEnded($event, spaceCap)"
+            [cdkDragFreeDragPosition]="{x:0,y:0}"
+            >
+        {{spaceCap.title}}
+        <!--<canvas #space  (isVisible)="renderText(space)"></canvas>-->
+        <button (click)="checkSpace($event)">Check Spaces</button>
+
     </div>
   </div>
 </div>
-<button (click)="checkSpaces()">Check Spaces</button>
+<button (click)="checkSpaces($event)">Check Spaces</button>

@@ -18,6 +18,8 @@ export class Bottlecap {
 	public tag: Tag[];
 	public link: Link[];
 	public profile: Profile;
+	public PositionX: string;
+	public PositionY: string;
 
 	constructor(title: string, tags: Tag[], links: Link[], profile: Profile) {
 		this.title = title;
@@ -41,5 +43,7 @@ export class Space {
 	public BackgroundImage: string;
 	public DefaultBottlecapId: string;
 	public ProfileId: string;
+	public PositionX: string;
+	public PositionY: string;
 }
 

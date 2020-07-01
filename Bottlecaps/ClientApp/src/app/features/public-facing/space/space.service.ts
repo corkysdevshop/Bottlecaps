@@ -67,7 +67,10 @@ export class SpaceService {
 
   //UPDATE
 	updatePlace(space: Space) {
-
+		console.log("space service with space: ", space);
+		this.dataService.updatePosition(space).subscribe(space => {
+			console.log('space position updated', space);
+		});
 	}
   //DELETE
 }
