@@ -23,7 +23,7 @@ export class SpaceAreaComponent implements OnInit {
 
 	onDragEnded(event, bottlecap: Bottlecap) {
 		console.log("1_onDragEnded: ",event);
-	/**/bottlecap.PositionX
+	/**/
 		let bottlecapElement = event.source.getRootElement();
 		console.log("2_BottlecapElement: ", bottlecapElement);
 
@@ -34,13 +34,8 @@ export class SpaceAreaComponent implements OnInit {
 		let BottlecapBoundingRect = bottlecapElement.getBoundingClientRect();
 		console.log("3b_BottlecapBoundingRect: ", BottlecapBoundingRect);
 
-
-
-		let parentPosition = this.getPosition(bottlecapElement);
-		console.log("4_parentPosition: ", parentPosition);
-
 		let x = BottlecapBoundingRect.x - BottlecapParentBoundingRect.left;
-		console.log("5_boundingClientRect.x: ",BottlecapBoundingRect.x," - parentPosition.left: ",parentPosition.left," = x: ", x);
+		console.log("5_BottlecapBoundingRect.x: ", BottlecapBoundingRect.x, " - BottlecapParentBoundingRect.left: ", BottlecapParentBoundingRect.left," = x: ", x);
 
 		let y = BottlecapBoundingRect.y - BottlecapParentBoundingRect.top;
 		console.log("6_y: ", y);
