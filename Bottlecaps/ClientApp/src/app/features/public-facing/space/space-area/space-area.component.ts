@@ -21,37 +21,43 @@ export class SpaceAreaComponent implements OnInit {
 		}, (err) => { console.log("err: ", err);})
   }
 
-	onDragEnded(event: CdkDrag, bottlecap: Bottlecap) {
-		console.log("onDragEnded: ",event);
-	/*
+	onDragEnded(event, bottlecap: Bottlecap) {
+		console.log("1_onDragEnded: ",event);
+	/**/bottlecap.PositionX
 		let bottlecapElement = event.source.getRootElement();
-		console.log("element: ", bottlecapElement);
+		console.log("2_BottlecapElement: ", bottlecapElement);
 
-		let boundingClientRect = bottlecapElement.getBoundingClientRect();
-		console.log("boundingClientRect: ", boundingClientRect);
+		let bottlecapParentElement = bottlecapElement.parentElement;
+		let BottlecapParentBoundingRect = bottlecapParentElement.getBoundingClientRect();
+		console.log("3a_BottlecapParentBoundingRect: ", BottlecapParentBoundingRect);
+
+		let BottlecapBoundingRect = bottlecapElement.getBoundingClientRect();
+		console.log("3b_BottlecapBoundingRect: ", BottlecapBoundingRect);
+
+
 
 		let parentPosition = this.getPosition(bottlecapElement);
-		console.log("parentPosition: ", parentPosition);
+		console.log("4_parentPosition: ", parentPosition);
 
-		let x = boundingClientRect.x - parentPosition.left;
-		console.log("boundingClientRect.x: ",boundingClientRect.x," - parentPosition.left: ",parentPosition.left," = x: ", x);
+		let x = BottlecapBoundingRect.x - BottlecapParentBoundingRect.left;
+		console.log("5_boundingClientRect.x: ",BottlecapBoundingRect.x," - parentPosition.left: ",parentPosition.left," = x: ", x);
 
-		let y = boundingClientRect.y - parentPosition.top;
-		console.log("y: ", y);
+		let y = BottlecapBoundingRect.y - BottlecapParentBoundingRect.top;
+		console.log("6_y: ", y);
     
 
-		console.log('x: ' + x,
+		console.log('7_x: ' + x,
 			          'y: ' + y);
-		this.updatePlace(x, y, bottlecap.bottlecapId);*/
+		this.updatePlace(Math.round(x), Math.round(y), bottlecap.bottlecapId);
 	}
 
-	getPosition(el) {
+	getPosition(bcEl) {
 		let x = 0;
 		let y = 0;
-		while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-			x += el.offsetLeft - el.scrollLeft;
-			y += el.offsetTop - el.scrollTop;
-			el = el.offsetParent;
+		while (bcEl && !isNaN(bcEl.offsetLeft) && !isNaN(bcEl.offsetTop)) {
+			x += bcEl.offsetLeft - bcEl.scrollLeft;
+			y += bcEl.offsetTop - bcEl.scrollTop;
+			bcEl = bcEl.offsetParent;
 		}
 		return { top: y, left: x };
 	}
