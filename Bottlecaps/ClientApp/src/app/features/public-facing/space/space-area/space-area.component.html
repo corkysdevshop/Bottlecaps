@@ -8,11 +8,9 @@
             *ngFor="let spaceCap of this.spaceCaps"
             (cdkDragEnded)="onDragEnded($event, spaceCap)"
             [cdkDragFreeDragPosition]="{x:0,y:0}"
+           (click)="setPlace(spaceCap)"
             >
         {{spaceCap.title}}<br />x:{{spaceCap.positionX}}<br />y:{{spaceCap.positionY}}
-        <!--<canvas #space  (isVisible)="renderText(space)"></canvas>-->
-        <button (click)="checkSpace($event)">Check Spaces</button>
-
     </div>
   </div>
 </div>

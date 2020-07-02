@@ -29,32 +29,20 @@ export class SpaceAreaComponent implements OnInit {
 
 		let bottlecapParentElement = bottlecapElement.parentElement;
 		let BottlecapParentBoundingRect = bottlecapParentElement.getBoundingClientRect();
-		console.log("3a_BottlecapParentBoundingRect: ", BottlecapParentBoundingRect);
+		//console.log("3a_BottlecapParentBoundingRect: ", BottlecapParentBoundingRect);
 
 		let BottlecapBoundingRect = bottlecapElement.getBoundingClientRect();
-		console.log("3b_BottlecapBoundingRect: ", BottlecapBoundingRect);
+		//console.log("3b_BottlecapBoundingRect: ", BottlecapBoundingRect);
 
 		let x = BottlecapBoundingRect.x - BottlecapParentBoundingRect.left;
-		console.log("5_BottlecapBoundingRect.x: ", BottlecapBoundingRect.x, " - BottlecapParentBoundingRect.left: ", BottlecapParentBoundingRect.left," = x: ", x);
+		//console.log("5_BottlecapBoundingRect.x: ", BottlecapBoundingRect.x, " - BottlecapParentBoundingRect.left: ", BottlecapParentBoundingRect.left," = x: ", x);
 
 		let y = BottlecapBoundingRect.y - BottlecapParentBoundingRect.top;
-		console.log("6_y: ", y);
+		//console.log("6_y: ", y);
     
-
 		console.log('7_x: ' + x,
 			          'y: ' + y);
 		this.updatePlace(Math.round(x), Math.round(y), bottlecap.bottlecapId);
-	}
-
-	getPosition(bcEl) {
-		let x = 0;
-		let y = 0;
-		while (bcEl && !isNaN(bcEl.offsetLeft) && !isNaN(bcEl.offsetTop)) {
-			x += bcEl.offsetLeft - bcEl.scrollLeft;
-			y += bcEl.offsetTop - bcEl.scrollTop;
-			bcEl = bcEl.offsetParent;
-		}
-		return { top: y, left: x };
 	}
 
 	updatePlace(x: number, y: number, spaceCapId: number) {
@@ -66,20 +54,6 @@ export class SpaceAreaComponent implements OnInit {
 		this.spaceService.updatePlace(space);
 	}
 
-	checkSpace(event) {
-    console.log("checkSpace()")
-		console.log("event: ", event);
-		let element = event.source.getRootElement();
-		console.log("element: ", element);
-		let boundingClientRect = element.getBoundingClientRect();
-		console.log("boundingClientRect: ", boundingClientRect);
-		let parentPosition = this.getPosition(element);
-		console.log("parentPosition: ", parentPosition);
-		let x = boundingClientRect.x - parentPosition.left;
-		console.log("x: ", x);
-		let y = boundingClientRect.y - parentPosition.top;
-		console.log("y: ", y);
-	}
 	checkSpaces(event) {
 		console.log("spaces in this.spaceService.spaceBottleCapCollection: ", this.spaceService.spaceBottleCapCollection);
 		console.log("spaces in this.spaceCaps: ", this.spaceCaps);
@@ -91,5 +65,11 @@ export class SpaceAreaComponent implements OnInit {
 		for (let space of this.spaceCaps) {
 			this.updatePlace(10, 10, space.bottlecapId);
 		}
+	}
+	setPlace(space) {
+		var newPositionString = "{x:" + space.positionX + ",y:" + space.positionY + "}";
+        // TODO: THIS STRING NEEDS TO GO INTO THE [cdkDragFreeDragPosition], but it won't allow template binding on the one hand and I can't instantiate multiple local variables from the for loop on the other
+		console.log("***space:", newPositionString); //return {x:0,y:0}
+		return newPositionString;
 	}
 }
