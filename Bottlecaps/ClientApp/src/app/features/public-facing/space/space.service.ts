@@ -47,7 +47,7 @@ export class SpaceService {
 	//READ
 	getSpaceBottlecaps() {
 		var spaces = this.spaceBottleCapCollection;
-		console.log("spaces: ", spaces);
+		//console.log("spaces: ", spaces);
 		this.dataService.getSpaceBottlecaps(spaces)
 			.pipe(map(responseData => {
 				const bottlecapArray = [];
@@ -57,7 +57,7 @@ export class SpaceService {
 				return bottlecapArray;
 			}))
 			.subscribe(spaceCaps => {
-				console.log("response: ", spaceCaps);
+				//console.log("space.service getSpaceCaps(): ", spaceCaps);
 				this.spaceBottleCapCollection = spaceCaps;
 				this.spacesChanged.next(this.spaceBottleCapCollection.slice())
 			}, err => {
@@ -67,7 +67,7 @@ export class SpaceService {
 
   //UPDATE
 	updatePlace(space: Space) {
-		console.log("space service with space: ", space);
+		//console.log("space service with space: ", space);
 		this.dataService.updatePosition(space).subscribe(space => {
 			console.log('space position updated', space);
 		});

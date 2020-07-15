@@ -74,14 +74,16 @@ namespace Bottlecaps.Controllers
         {
             //_context.Entry(space.SpaceId).State = EntityState.Modified;
             int spaceId = Int32.Parse(space.SpaceId);
-            Bottlecap bottlecap = await _context.Bottlecap.FindAsync(spaceId);
+            var bottlecap = await _context.Bottlecap.FindAsync(spaceId);
             bottlecap.PositionX = space.PositionX;
             bottlecap.PositionY = space.PositionY;
             //bottlecap.ProfileId = null; TODO: FIGURE OUT IF ITS OK TO PASS PROFILE ID BACK, SINCE IT SHOULD BE ENCRYPTED WITH HTTPS ANYWAY. IF NOT I'LL HAVE TO REFACTOR SINCE ITS ALREADY BEING RETURED TO THE CLIENT IN THE GET BOTTLECAPS METHOD. 
-
+            
             try
             {
-                await _context.SaveChangesAsync();
+                //var x = _context.Update(bottlecap);
+                _context.SaveChanges();
+                return Ok(bottlecap);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -95,7 +97,7 @@ namespace Bottlecaps.Controllers
                 }
             }
 
-            return Ok(bottlecap);
+            //return Ok(bottlecap);
         }
 
         // POST: api/Bottlecaps

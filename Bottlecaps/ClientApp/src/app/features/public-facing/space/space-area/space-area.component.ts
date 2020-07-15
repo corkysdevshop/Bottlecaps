@@ -11,14 +11,21 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
 export class SpaceAreaComponent implements OnInit {
 
 	spaceCaps: Bottlecap[];
-
+	dragPosition = [];
   constructor(private spaceService: SpaceService) { }
 
 	ngOnInit(): void {
 		this.spaceService.getSpaceBottlecaps();
 		this.spaceService.spacesChanged.subscribe(spaces => {
 			this.spaceCaps = spaces.slice();
-		}, (err) => { console.log("err: ", err);})
+		}, (err) => { console.log("err: ", err); },
+			() => {
+            console.log("success!!!")
+				for (var i = 0; i < this.spaceCaps.length; i++) {
+					console.log("space:", this.spaceCaps[i]);
+				}
+			}
+		)
   }
 
 	onDragEnded(event, bottlecap: Bottlecap) {
@@ -55,21 +62,23 @@ export class SpaceAreaComponent implements OnInit {
 	}
 
 	checkSpaces(event) {
-		console.log("spaces in this.spaceService.spaceBottleCapCollection: ", this.spaceService.spaceBottleCapCollection);
+		//console.log("spaces in this.spaceService.spaceBottleCapCollection: ", this.spaceService.spaceBottleCapCollection);
 		console.log("spaces in this.spaceCaps: ", this.spaceCaps);
-
-		this.resetPositions();
-	  console.log("spaces in this.spaceCaps: ", this.spaceCaps);
+		console.log("this.dragPosition: ",this.dragPosition)
+		//this.resetPositions();
 	}
 	resetPositions() {
 		for (let space of this.spaceCaps) {
 			this.updatePlace(10, 10, space.bottlecapId);
 		}
 	}
-	setPlace(space) {
-		var newPositionString = "{x:" + space.positionX + ",y:" + space.positionY + "}";
+	setDragPosition(space) {
+		//var newPositionString = "{x:" + space.positionX + ",y:" + space.positionY + "}";
         // TODO: THIS STRING NEEDS TO GO INTO THE [cdkDragFreeDragPosition], but it won't allow template binding on the one hand and I can't instantiate multiple local variables from the for loop on the other
-		console.log("***space:", newPositionString); //return {x:0,y:0}
-		return newPositionString;
+		//return newPositionString;
+		var posObj = { x: space.positionX, y: space.positionY };
+		//console.log("**setDragPosition:", newPositionString, "space.bottlecapId: ", space.bottlecapId);
+		console.log("**setDragPosition:", posObj, "space.bottlecapId: ", space.bottlecapId); //return {x:0,y:0}
+		this.dragPosition.push(posObj);
 	}
 }
