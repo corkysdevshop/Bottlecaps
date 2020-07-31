@@ -7,7 +7,7 @@
          cdkDrag
          *ngFor="let spaceCap of this.spaceCaps; let i = index;"
          (cdkDragEnded)="onDragEnded($event, spaceCap)"
-         [cdkDragFreeDragPosition]="{x:50*i,y:50}"
+         [cdkDragFreeDragPosition]="this.dragPosition[i]"
          (click)="setDragPosition(spaceCap)"
          >
       {{spaceCap.title}}

@@ -18,8 +18,8 @@ export class Bottlecap {
 	public tag: Tag[];
 	public link: Link[];
 	public profile: Profile;
-	public PositionX: string;
-	public PositionY: string;
+	public positionX: string;
+	public positionY: string;
 
 	constructor(title: string, tags: Tag[], links: Link[], profile: Profile) {
 		this.title = title;
