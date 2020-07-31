@@ -10,12 +10,14 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
 })
 
 export class SpaceAreaComponent implements OnInit {
-
+	@ViewChild('spaceArea', {static:false}) canvas: ElementRef;
 	spaceCaps: Bottlecap[];
 	dragPosition = [];
   constructor(private spaceService: SpaceService) { }
 
 	ngOnInit(): void {
+		
+
 		this.spaceService.spacesChanged.subscribe(spaces => {
 			this.spaceCaps = [];
 			console.log("111111111111111", spaces);
@@ -42,27 +44,15 @@ export class SpaceAreaComponent implements OnInit {
 	}
 
 	onDragEnded(event, bottlecap: Bottlecap) {
-		console.log("1_onDragEnded: ",event);
+		console.log(event, bottlecap);
+		var oldX = parseInt(bottlecap.positionX);
+		var oldY = parseInt(bottlecap.positionY);
+		var newX = event.distance.x;
+		var newY = event.distance.y;
 	/**/
-		let bottlecapElement = event.source.getRootElement();
-		console.log("2_BottlecapElement: ", bottlecapElement);
-
-		let bottlecapParentElement = bottlecapElement.parentElement;
-		let BottlecapParentBoundingRect = bottlecapParentElement.getBoundingClientRect();
-		//console.log("3a_BottlecapParentBoundingRect: ", BottlecapParentBoundingRect);
-
-		let BottlecapBoundingRect = bottlecapElement.getBoundingClientRect();
-		//console.log("3b_BottlecapBoundingRect: ", BottlecapBoundingRect);
-
-		let x = BottlecapBoundingRect.x - BottlecapParentBoundingRect.left;
-		//console.log("5_BottlecapBoundingRect.x: ", BottlecapBoundingRect.x, " - BottlecapParentBoundingRect.left: ", BottlecapParentBoundingRect.left," = x: ", x);
-
-		let y = BottlecapBoundingRect.y - BottlecapParentBoundingRect.top;
-		//console.log("6_y: ", y);
-    
-		console.log('7_x: ' + x,
-			          'y: ' + y);
-		this.updatePlace(Math.round(x), Math.round(y), bottlecap.bottlecapId);
+		var convertedX = oldX + newX;
+		var convertedY = oldY + newY;
+		this.updatePlace(Math.round(convertedX), Math.round(convertedY), bottlecap.bottlecapId);
 	}
 
 	updatePlace(x: number, y: number, spaceCapId: number) {
@@ -77,7 +67,8 @@ export class SpaceAreaComponent implements OnInit {
 	checkSpaces(event) {
 		//console.log("spaces in this.spaceService.spaceBottleCapCollection: ", this.spaceService.spaceBottleCapCollection);
 		console.log("spaces in this.spaceCaps: ", this.spaceCaps);
-		console.log("this.dragPosition: ",this.dragPosition)
+		console.log("this.dragPosition: ", this.dragPosition)
+		console.log("canvas: ", this.canvas);
 		//this.resetPositions();
 	}
 	resetPositions() {
