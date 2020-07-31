@@ -62,6 +62,7 @@ export class SpaceAreaComponent implements OnInit {
 		space.PositionY = y.toString();
 		console.log("updatePlace x: ", x, " y: ", y);
 		this.spaceService.updatePlace(space);
+		this.spaceService.getSpaceBottlecaps();
 	}
 
 	checkSpaces(event) {
