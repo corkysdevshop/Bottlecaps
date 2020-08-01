@@ -31,12 +31,11 @@ export class SpaceAreaComponent implements OnInit {
 		for (var i = 0; i < spaces.length; i++) {
       var posObj = { x: spaces[i].positionX, y: spaces[i].positionY };
 			this.dragPosition.push(posObj);
-			console.log("**setDragPosition:", posObj,i); 
 		}
 	}
 
   // figures out where bottlecap was moved to
-	onDragEnded(event, bottlecap: Bottlecap) {
+	onDragEnded(event, bottlecap: Bottlecap, index) {
 		console.log(event, bottlecap);
 		var oldX = parseInt(bottlecap.positionX);
 		var oldY = parseInt(bottlecap.positionY);
@@ -44,18 +43,20 @@ export class SpaceAreaComponent implements OnInit {
 		var newY = event.distance.y;
 		var convertedX = oldX + newX;
 		var convertedY = oldY + newY;
-		this.updatePlace(Math.round(convertedX), Math.round(convertedY), bottlecap.bottlecapId);
+		this.updatePlaceinDB(Math.round(convertedX), Math.round(convertedY), bottlecap.bottlecapId);
+		var posObj = { x: convertedX, y: convertedY };
+		console.log("posObj: ", posObj);
+		this.dragPosition.splice(index, 1, posObj);
+		this.dragPosition[index] = posObj;
 	}
 
   // sends new position to database
-	updatePlace(x: number, y: number, spaceCapId: number) {
+	updatePlaceinDB(x: number, y: number, spaceCapId: number) {
 		const space = new Space();
 		space.SpaceId = spaceCapId.toString();
 		space.PositionX = x.toString();
 		space.PositionY = y.toString();
-		console.log("updatePlace x: ", x, " y: ", y);
 		this.spaceService.updatePlace(space);
-		//this.spaceService.getSpaceBottlecaps();
 	}
 
   // END
@@ -64,12 +65,10 @@ export class SpaceAreaComponent implements OnInit {
 		//console.log("spaces in this.spaceService.spaceBottleCapCollection: ", this.spaceService.spaceBottleCapCollection);
 		console.log("spaces in this.spaceCaps: ", this.spaceCaps);
 		console.log("this.dragPosition: ", this.dragPosition)
-		console.log("canvas: ", this.canvas);
-		//this.resetPositions();
 	}
 	resetPositions() {
 		for (let space of this.spaceCaps) {
-			this.updatePlace(10, 10, space.bottlecapId);
+			this.updatePlaceinDB(10, 10, space.bottlecapId);
 		}
 	}
 }

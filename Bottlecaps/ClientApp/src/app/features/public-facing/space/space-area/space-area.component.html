@@ -6,7 +6,7 @@
          cdkDragBoundary=".space-image"
          cdkDrag
          *ngFor="let spaceCap of this.spaceCaps; let i = index;"
-         (cdkDragEnded)="onDragEnded($event, spaceCap)"
+         (cdkDragEnded)="onDragEnded($event, spaceCap, i)"
          [cdkDragFreeDragPosition]="this.dragPosition[i]"
          (click)="setDragPosition(spaceCap)"
          >
