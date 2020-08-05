@@ -46,6 +46,7 @@ export class SpaceAreaComponent implements OnInit {
 		this.updatePlaceinDB(Math.round(convertedX), Math.round(convertedY), bottlecap.bottlecapId);
 		var posObj = { x: convertedX, y: convertedY };
 		console.log("posObj: ", posObj);
+
 		this.dragPosition.splice(index, 1, posObj);
 		this.dragPosition[index] = posObj;
 	}
