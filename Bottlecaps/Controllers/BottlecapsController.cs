@@ -50,11 +50,11 @@ namespace Bottlecaps.Controllers
         // GET: api/Bottlecaps/5
         [Authorize]
         [HttpGet("mybottlecaps/{profileId}")]
-        public async Task<ActionResult<IEnumerable<Bottlecap>>> GetBottlecaps(int profileId)
+        public async Task<ActionResult<IEnumerable<Bottlecap>>> GetBottlecaps()
         {
             //var bottlecap = await _context.Bottlecap.FindAsync(id);
             string userId = HttpContext.User.Claims.First().Value;
-            var bottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileStringId == userId)
+            var bottlecaps = await _context.Bottlecap.Where(bc => bc.ProfileId == userId)
                 .ToListAsync();
             
             if (bottlecaps == null)
@@ -70,22 +70,24 @@ namespace Bottlecaps.Controllers
         // more details see https://aka.ms/RazorPagesCRUD.
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBottlecap(int id, Bottlecap bottlecap)
+        public async Task<IActionResult> PutBottlecap([FromBody]PostedSpace space)
         {
-            if (id != bottlecap.BottlecapId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(bottlecap).State = EntityState.Modified;
-
+            //_context.Entry(space.SpaceId).State = EntityState.Modified;
+            int spaceId = Int32.Parse(space.SpaceId);
+            var bottlecap = await _context.Bottlecap.FindAsync(spaceId);
+            bottlecap.PositionX = space.PositionX;
+            bottlecap.PositionY = space.PositionY;
+            //bottlecap.ProfileId = null; TODO: FIGURE OUT IF ITS OK TO PASS PROFILE ID BACK, SINCE IT SHOULD BE ENCRYPTED WITH HTTPS ANYWAY. IF NOT I'LL HAVE TO REFACTOR SINCE ITS ALREADY BEING RETURED TO THE CLIENT IN THE GET BOTTLECAPS METHOD. 
+            
             try
             {
-                await _context.SaveChangesAsync();
+                //var x = _context.Update(bottlecap);
+                _context.SaveChanges();
+                return Ok(bottlecap);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BottlecapExists(id))
+                if (!BottlecapExists(spaceId))
                 {
                     return NotFound();
                 }
@@ -95,7 +97,7 @@ namespace Bottlecaps.Controllers
                 }
             }
 
-            return NoContent();
+            //return Ok(bottlecap);
         }
 
         // POST: api/Bottlecaps
@@ -135,10 +137,11 @@ namespace Bottlecaps.Controllers
 
             //ADD BOTTLECAP
             Bottlecap bottlecap = new Bottlecap();
-            //TODO: MAKE THESE INTO SOMETHING LIKE A GUID, BUT MORE PERFORMANCE
-            bottlecap.BottlecapId = _context.Bottlecap.Any() ? _context.Bottlecap.Select(bc => bc.BottlecapId).Max() + 1 : 1;
+            
+            int bcId = _context.Bottlecap.Any() ? _context.Bottlecap.Select(bc => bc.BottlecapId).Max() + 1 : 1;
+            bottlecap.BottlecapId = bcId; //TODO: MAKE THESE INTO SOMETHING LIKE A GUID, SO IT CAN DETATCH FROM THE PROFILE THAT CREATED IT
             bottlecap.Title = bottlecapInput.title;
-            bottlecap.ProfileStringId = userId;
+            bottlecap.ProfileId = userId;
             _context.Bottlecap.Add(bottlecap);
             try
             {

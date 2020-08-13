@@ -1,12 +1,22 @@
 <div class="container">
-  <div id="space" class="row">
-    <img id="space-image" src="assets/Mock-cafe.png" />
+  <div #spaceArea id="space" class="col-md-12 space-image">
 
-    <div class="example-box" id="bottlecap" cdkDrag *ngFor="let spaceCap of this.spaceCaps"   style="background-color: blanchedalmond;">
+    <img id="space-image" src="assets/Mock-cafe.png" />
+    <div class="bottlecap"
+         cdkDragBoundary=".space-image"
+         cdkDrag
+         *ngFor="let spaceCap of this.spaceCaps; let i = index;"
+         (cdkDragEnded)="onDragEnded($event, spaceCap, i)"
+         [cdkDragFreeDragPosition]="this.dragPosition[i]"
+         (click)="setDragPosition(spaceCap)"
+         >
       {{spaceCap.title}}
-      <canvas #space width="25" height="50" (isVisible)="renderText(space)"></canvas>
+      <br />id:{{spaceCap.bottlecapId}}
+      <br />x:{{spaceCap.positionX}}
+      <br />y:{{spaceCap.positionY}}
+      <br />i: {{i}}
     </div>
   </div>
 </div>
-<button (click)="checkSpaces()">Check Spaces</button>
-<button (click)="renderText()">Render Text</button>
+<button (click)="checkSpaces($event)">Check Spaces</button>
+<button (click)="resetPositions()">Reset Positions</button>

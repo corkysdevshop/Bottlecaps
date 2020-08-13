@@ -16,7 +16,7 @@ namespace Bottlecaps.Models
         public string SuccessfulConnection { get; set; }
         public int? ConnecteeId { get; set; }
         public int? ConnectorId { get; set; }
-        public int? SpaceId { get; set; }
+        public string SpaceId { get; set; }
 
         public virtual Space Space { get; set; }
         public virtual ICollection<Message> Message { get; set; }

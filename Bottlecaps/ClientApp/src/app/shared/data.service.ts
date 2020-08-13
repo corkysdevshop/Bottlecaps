@@ -55,7 +55,12 @@ export class DataService {
     * UPDATE (PUT)
     */
     //TODO: IMPLEMENT
-
+    //TODO: CHANGE THIS TO A PUT
+	updatePosition(space: Space) {
+		console.log('space.SpaceId', space.SpaceId);
+        //TODO: FIGURE OUT IF I HAVE TO SEND ID IN URL
+		return this.http.put<Space>(this.baseUrl + 'api/Bottlecaps/' + space.SpaceId, space);
+	}
   /**
     * DELETE (DELETE)
     */

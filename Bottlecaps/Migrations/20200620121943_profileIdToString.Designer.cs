@@ -4,14 +4,16 @@ using Bottlecaps.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bottlecaps.Migrations
 {
     [DbContext(typeof(BottlecapsContext))]
-    partial class BottlecapsContextModelSnapshot : ModelSnapshot
+    [Migration("20200620121943_profileIdToString")]
+    partial class profileIdToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
