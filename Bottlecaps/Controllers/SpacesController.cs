@@ -22,6 +22,7 @@ namespace Bottlecaps.Controllers
         }
         // THIS GETS ALL THE SPACES IN THE SPACES TABLE AND TRANSFORMS THEM INTO BOTTLECAPS
         // GET: api/Spaces
+        //[Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bottlecap>>> GetSpace()
         {
@@ -71,6 +72,8 @@ namespace Bottlecaps.Controllers
                 //Builds bottlecap on server
                 Bottlecap _placedBottlecap = new Bottlecap();
                 _placedBottlecap.Title = bottlecap.Title; //TODO: DELETE THIS
+                bottlecap.PositionX = "0";
+                bottlecap.PositionY = "0";
 
                 List<Link> _links = await _context.Link.Where(lnk => lnk.BottlecapId == bottlecap.BottlecapId).ToListAsync();
                 _placedBottlecap.Link = _links;
@@ -101,32 +104,27 @@ namespace Bottlecaps.Controllers
         // more details see https://aka.ms/RazorPagesCRUD.
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSpace(string id, PostedSpace space)
+        public async Task<IActionResult> PutSpace([FromBody]PostedSpace space)
         {
-            if (id != space.SpaceId)
-            {
-                return BadRequest();
-            }
+            string spaceId = space.SpaceId;
+            var spaceFromMemory = _context.Space.Where(sp => sp.DefaultBottlecapId == space.SpaceId).Single();
 
-            _context.Entry(space).State = EntityState.Modified;
+            spaceFromMemory.PositionX = space.PositionX;
+            spaceFromMemory.PositionY = space.PositionY;
+
+            _context.Entry(spaceFromMemory).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
+                return Ok(spaceFromMemory);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SpaceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
-            return NoContent();
+            //return NoContent();
         }
         // POST: api/Spaces
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
@@ -154,7 +152,6 @@ namespace Bottlecaps.Controllers
 
             space.ProfileId = userId;
 
-            Console.WriteLine(postedSpace);
             _context.Space.Add(space);
             try
             {

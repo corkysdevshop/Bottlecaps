@@ -59,7 +59,7 @@ export class DataService {
 	updatePosition(space: Space) {
 		console.log('space.SpaceId', space.SpaceId);
         //TODO: FIGURE OUT IF I HAVE TO SEND ID IN URL
-		return this.http.put<Space>(this.baseUrl + 'api/Bottlecaps/' + space.SpaceId, space);
+		return this.http.put<Space>(this.baseUrl + 'api/Spaces/' + space.SpaceId, space);
 	}
   /**
     * DELETE (DELETE)

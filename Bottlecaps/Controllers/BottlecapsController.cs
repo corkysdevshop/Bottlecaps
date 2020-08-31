@@ -73,6 +73,7 @@ namespace Bottlecaps.Controllers
         public async Task<IActionResult> PutBottlecap([FromBody]PostedSpace space)
         {
             //_context.Entry(space.SpaceId).State = EntityState.Modified;
+            // TODO: DELETE THESE LINES, I SHOULD HAVE IMPLEMENTED ON SPACE, NOT HERE
             int spaceId = Int32.Parse(space.SpaceId);
             var bottlecap = await _context.Bottlecap.FindAsync(spaceId);
             bottlecap.PositionX = space.PositionX;

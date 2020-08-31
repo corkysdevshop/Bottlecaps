@@ -29,7 +29,7 @@ export class SpaceAreaComponent implements OnInit {
 	loadPositions(spaces: Bottlecap[]) {
 		this.dragPosition = [];
 		for (var i = 0; i < spaces.length; i++) {
-      var posObj = { x: spaces[i].positionX, y: spaces[i].positionY };
+			var posObj = { x: spaces[i].positionX, y: spaces[i].positionY };
 			this.dragPosition.push(posObj);
 		}
 	}
@@ -37,6 +37,7 @@ export class SpaceAreaComponent implements OnInit {
   // figures out where bottlecap was moved to
 	onDragEnded(event, bottlecap: Bottlecap, index) {
 		console.log(event, bottlecap);
+
 		var oldX = parseInt(bottlecap.positionX);
 		var oldY = parseInt(bottlecap.positionY);
 		var newX = event.distance.x;
@@ -45,7 +46,7 @@ export class SpaceAreaComponent implements OnInit {
 		var convertedY = oldY + newY;
 		this.updatePlaceinDB(Math.round(convertedX), Math.round(convertedY), bottlecap.bottlecapId);
 		var posObj = { x: convertedX, y: convertedY };
-		console.log("posObj: ", posObj);
+		console.log("posObj: ", posObj, oldX, oldY, newX, newY);
 
 		this.dragPosition.splice(index, 1, posObj);
 		this.dragPosition[index] = posObj;

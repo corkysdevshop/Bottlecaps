@@ -33,7 +33,7 @@ export class SpaceService {
 	}
 	createSpace(bottlecapId) {
 		var newSpaceInstance = <Space>{};
-		newSpaceInstance.SpaceId = bottlecapId; //TODO: CHANGE THIS TO BOTTLECAPID INSTEAD OF SPACE ID WITH A MIGRATION
+		newSpaceInstance.SpaceId = bottlecapId; //TODO: CHANGE THIS TO BOTTLECAPID INSTEAD OF SPACE ID WITH A MIGRATION. THE DEFAULT BOTTLECAPID IN THE SPACE TABLE SHOULD BE AN INT
 		//TODO: ADD REST OF PROPERTIES AS REQUIRED
 		newSpaceInstance.SpaceName = "";
 		newSpaceInstance.ActiveStatus = "";
@@ -67,7 +67,7 @@ export class SpaceService {
 
   //UPDATE
 	updatePlace(space: Space) {
-		//console.log("space service with space: ", space);
+		console.log("space service with space: ", space);
 		this.dataService.updatePosition(space).subscribe(space => {
 			console.log('space position updated', space);
 		});
