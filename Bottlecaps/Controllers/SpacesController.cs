@@ -148,7 +148,8 @@ namespace Bottlecaps.Controllers
             space.SpaceName = postedSpace.SpaceName;
             space.ActiveStatus = postedSpace.ActiveStatus;
             space.BackgroundImage = postedSpace.BackgroundImage;
-
+            space.PositionX = "0";
+            space.PositionY = "0";
             space.DefaultBottlecapId = postedSpace.SpaceId.ToString(); //THIS CHANGES PLACES ON THE OBJECT BECAUSE ONCE ITS IN THE WILD, THE SPACE NEEDS A GUID. THIS postedSpace.SpaceId is the original Bottlecap.BottlecapId (PK)
             //TODO: THIS IS BAD, IT ALL SHOULD BE STRING OR INT
 
