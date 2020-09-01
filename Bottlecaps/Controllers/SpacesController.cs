@@ -58,6 +58,8 @@ namespace Bottlecaps.Controllers
                         foreach (Bottlecap bottlecap in placedProfileCaps)
                         {
                             bottlecap.ProfileId = null;
+                            bottlecap.PositionX = space.PositionX;
+                            bottlecap.PositionY = space.PositionY;
                             placedBottlecaps.Add(bottlecap);
                         }
                     }
@@ -72,8 +74,8 @@ namespace Bottlecaps.Controllers
                 //Builds bottlecap on server
                 Bottlecap _placedBottlecap = new Bottlecap();
                 _placedBottlecap.Title = bottlecap.Title; //TODO: DELETE THIS
-                bottlecap.PositionX = "0";
-                bottlecap.PositionY = "0";
+                //bottlecap.PositionX = bottlecap.PositionX;
+                //bottlecap.PositionY = bottlecap.PositionY;
 
                 List<Link> _links = await _context.Link.Where(lnk => lnk.BottlecapId == bottlecap.BottlecapId).ToListAsync();
                 _placedBottlecap.Link = _links;

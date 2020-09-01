@@ -52,12 +52,13 @@ export class SpaceService {
 			.pipe(map(responseData => {
 				const bottlecapArray = [];
 				for (const bottlecap in responseData) {
+					console.log("responseData: ", responseData);
 					bottlecapArray.push({ ...responseData[bottlecap] })
 				}
 				return bottlecapArray;
 			}))
 			.subscribe(spaceCaps => {
-				//console.log("space.service getSpaceCaps(): ", spaceCaps);
+				console.log("space.service getSpaceCaps(): ", spaceCaps);
 				this.spaceBottleCapCollection = spaceCaps;
 				this.spacesChanged.next(this.spaceBottleCapCollection.slice())
 			}, err => {
