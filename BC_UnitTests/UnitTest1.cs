@@ -10,6 +10,22 @@ namespace BC_UnitTests
         public void shouldAddBottlecapToDatabase()
         {
             //Arrange
+            
+            //Act
+            //Assert
+        }
+        [TestMethod]
+        public void shouldShowGlobalListOfTags()
+        {
+            //Arrange
+
+            //Act
+            //Assert
+        }
+        [TestMethod]
+        public void shouldApplyConstriantsToSearchFieldOnDashboard()
+        {
+            //Arrange
 
             //Act
             //Assert
