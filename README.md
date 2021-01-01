@@ -11,6 +11,8 @@ This project aims to create social bonds between those with similar interests, s
 ### [Progressive Iteration Demo](http://www.bottlecaps.link/)
 ### [Donations](https://give.backonmyfeet.org/getbetter)
 ### [Resources](http://www.corkysdevshop.com/new-developer-resources/)
+### [Feedback](https://www.corkysdevshop.com/bottlecaps/)
+
 ---
 #### License
 
